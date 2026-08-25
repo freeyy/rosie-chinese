@@ -61,7 +61,8 @@ production.
 
 ## Known limitation
 
-Below roughly 600px wide the hero section overflows horizontally and the page
-scrolls sideways. This comes from the design itself — an unmodified copy of the
-Claude Design export overflows by exactly the same amount — so it is best fixed
-in the design rather than patched here.
+At phone widths the Contact screen still scrolls sideways by about 32px. The
+contact-card column is a grid item with the default `min-width: auto`, so it
+refuses to shrink below its own min-content width of ~390px. It is the same
+pattern the hero had before it was changed to `minmax(0, ...)`, and it is best
+fixed in the design rather than patched here. Every other screen is clean.
