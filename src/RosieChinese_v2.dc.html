@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Hanken Grotesk', system-ui, sans-serif; background: #F4EEE5; color: #2E2823; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #E6CABB; }
+  @keyframes rcFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes rcHeroIn { from { opacity: 0; transform: translateY(18px) scale(0.985); } to { opacity: 1; transform: none; } }
+  @keyframes rcFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes rcMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  [data-reveal] { opacity: 0; transform: translateY(34px); transition: opacity 1.9s cubic-bezier(0.16,1,0.3,1), transform 1.9s cubic-bezier(0.16,1,0.3,1); transition-delay: 260ms; }
+  [data-reveal].rv-in { opacity: 1; transform: none; }
+  .rc-marquee:hover .rc-marquee-track { animation-play-state: paused; }
+  .rc-fadewrap { max-width: 1196px; margin: 0 auto; -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0.04) 9px, rgba(0,0,0,0.16) 20px, rgba(0,0,0,0.38) 32px, rgba(0,0,0,0.64) 44px, rgba(0,0,0,0.86) 56px, rgba(0,0,0,0.97) 66px, #000 72px, #000 calc(100% - 72px), rgba(0,0,0,0.97) calc(100% - 66px), rgba(0,0,0,0.86) calc(100% - 56px), rgba(0,0,0,0.64) calc(100% - 44px), rgba(0,0,0,0.38) calc(100% - 32px), rgba(0,0,0,0.16) calc(100% - 20px), rgba(0,0,0,0.04) calc(100% - 9px), rgba(0,0,0,0) 100%); mask-image: linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0.04) 9px, rgba(0,0,0,0.16) 20px, rgba(0,0,0,0.38) 32px, rgba(0,0,0,0.64) 44px, rgba(0,0,0,0.86) 56px, rgba(0,0,0,0.97) 66px, #000 72px, #000 calc(100% - 72px), rgba(0,0,0,0.97) calc(100% - 66px), rgba(0,0,0,0.86) calc(100% - 56px), rgba(0,0,0,0.64) calc(100% - 44px), rgba(0,0,0,0.38) calc(100% - 32px), rgba(0,0,0,0.16) calc(100% - 20px), rgba(0,0,0,0.04) calc(100% - 9px), rgba(0,0,0,0) 100%); }
+  .rc-rail { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none;  }
+  .rc-rail::-webkit-scrollbar { display: none; }
+  .rc-rail > * { scroll-snap-align: center; }
+  .rc-lift { transition: transform 0.55s cubic-bezier(0.22,1,0.36,1), box-shadow 0.55s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
+  .rc-lift:hover { transform: scale(1.022); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+    .rc-marquee-track { animation: none !important; }
+  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #D8CDBD; border-radius: 8px; }
+  .rc-proto::-webkit-scrollbar { display: none; }
+  @media (max-width: 900px) {
+    .rc-2col { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .rc-app { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .rc-students { grid-template-columns: 1fr !important; }
+    .rc-sticky { position: static !important; top: auto !important; }
+    .rc-quad { grid-template-columns: repeat(2, 1fr) !important; }
+    .rc-h1 { font-size: 44px !important; }
+    .rc-pad { padding-left: 22px !important; padding-right: 22px !important; }
+    .rc-3col { grid-template-columns: 1fr 1fr !important; }
+    .rc-tcols { columns: 2 !important; }
+    .rc-darkbox { padding: 38px !important; }
+    .rc-bigpad { padding: 44px !important; }
+    .rc-msg { height: auto !important; }
+    .rc-story { height: auto !important; }
+    .rc-stage { position: static !important; height: auto !important; }
+    .rc-textstack { min-height: 0 !important; }
+    .rc-chap { position: relative !important; inset: auto !important; opacity: 1 !important; transform: none !important; margin-bottom: 46px !important; }
+    .rc-track { display: none !important; }
+    .rc-photo { position: relative !important; opacity: 1 !important; display: none !important; }
+    .rc-photo-0 { display: block !important; }
+  }
+  @media (max-width: 600px) {
+    .rc-3col { grid-template-columns: 1fr !important; }
+    .rc-tcols { columns: 1 !important; }
+    .rc-navlinks { display: none !important; }
+    .rc-signin { display: none !important; }
+    .rc-h1 { font-size: 34px !important; line-height: 1.1 !important; }
+    .rc-hero-pad { padding-top: 40px !important; padding-bottom: 30px !important; }
+    .rc-hide-sm { display: none !important; }
+    .rc-darkbox { padding: 28px !important; }
+    .rc-bigpad { padding: 32px 22px !important; }
+    .rc-quote { font-size: 22px !important; }
+    .rc-wrap { flex-wrap: wrap !important; }
+    .rc-sched-slots { grid-template-columns: repeat(3, 1fr) !important; }
+    .rc-week { gap: 5px !important; }
+    .rc-sec-pad { padding-top: 52px !important; padding-bottom: 20px !important; }
+  }
+</style>
+</helmet>
+<div style="min-height: 100vh;">
+
+  <!-- site-wide butter bloom background -->
+  <div style="position: fixed; inset: 0; z-index: -1; background: #F4EEE5; overflow: hidden; pointer-events: none;">
+    <div style="position: absolute; top: -12%; right: -12%; width: 64vw; max-width: 960px; aspect-ratio: 1/1; border-radius: 50%; background: radial-gradient(circle, rgba(244,212,120,0.75), rgba(244,212,120,0) 66%); filter: blur(30px);"></div>
+    <div style="position: absolute; top: -240px; left: -140px; width: 660px; height: 660px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0) 65%); filter: blur(20px);"></div>
+    <div style="position: absolute; bottom: -22%; left: 14%; width: 780px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(238,190,90,0.4), rgba(238,190,90,0) 65%); filter: blur(36px);"></div>
+    <div style="position: absolute; bottom: -160px; right: -180px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0) 65%); filter: blur(24px);"></div>
+  </div>
+
+  <!-- ===== TOP NAV ===== -->
+  <header style="position: sticky; top: 0; z-index: 40;">
+    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: -30px; background: linear-gradient(to bottom, rgba(248,242,231,0.8), rgba(248,242,231,0.45) 60%, rgba(248,242,231,0)); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); pointer-events: none;"></div>
+    <div style="position: relative; max-width: 1180px; margin: 0 auto; padding: 0 28px; height: 72px; display: flex; align-items: center; justify-content: space-between;">
+      <button onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 11px; background: none; border: none; cursor: pointer; padding: 0;">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: #C2674F; color: #FBF4EE; display: grid; place-items: center; font-family: 'Newsreader', serif; font-size: 20px; font-style: italic; font-weight: 500;">R</span>
+        <span style="font-family: 'Newsreader', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; color: #2E2823;">RosieChinese</span>
+      </button>
+      <nav class="rc-navlinks" style="display: flex; align-items: center; gap: 4px;">
+        <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="4">
+          <button onClick="{{ link.go }}" style="{{ link.style }}">{{ link.label }}</button>
+        </sc-for>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button onClick="{{ goDashboard }}" class="rc-signin" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: #6B6258; padding: 9px 12px;">Sign in</button>
+        <button onClick="{{ goCourses }}" style="background: #2E2823; color: #F7F1E8; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; padding: 11px 20px; border-radius: 100px;">Book a lesson</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HOME ===== -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both;">
+    <!-- hero -->
+    <section class="rc-2col rc-hero-pad rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 76px 28px 60px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;">
+      <div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; background: #EBDFD2; border-radius: 100px; font-size: 13px; font-weight: 600; color: #9A6A52; letter-spacing: 0.01em; margin-bottom: 26px;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #6E7F5E;"></span>
+          Now enrolling · Summer 2026 cohort
+        </div>
+        <h1 class="rc-h1" style="font-family: 'Newsreader', serif; font-size: 62px; line-height: 1.04; font-weight: 400; letter-spacing: -0.02em; margin: 0 0 24px; color: #2A241F;">Real Chinese,<br>one conversation<br>at a <span style="font-style: italic; color: #C2674F;">time.</span></h1>
+        <p style="font-size: 18.5px; line-height: 1.6; color: #5C5349; max-width: 460px; margin: 0 0 34px;">Private 1:1 Mandarin lessons that get you <em>actually speaking</em> — not just memorizing characters. Your pace, your topics, real conversations from the very first 你好.</p>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 38px;">
+          <button onClick="{{ goTrial }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 30px; border-radius: 100px;">Start with a $35 trial</button>
+          <button onClick="{{ goAbout }}" style="background: none; border: 1px solid #CDBFAD; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; color: #4A4138; padding: 15px 26px; border-radius: 100px;">Meet Rosie</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 26px;">
+          <div style="display: flex; align-items: center;">
+            <span style="width: 34px; height: 34px; border-radius: 50%; background: #D9B79F; border: 2px solid #F4EEE5; margin-right: -10px;"></span>
+            <span style="width: 34px; height: 34px; border-radius: 50%; background: #A9B79A; border: 2px solid #F4EEE5; margin-right: -10px;"></span>
+            <span style="width: 34px; height: 34px; border-radius: 50%; background: #C9A6C2; border: 2px solid #F4EEE5; margin-right: -10px;"></span>
+            <span style="width: 34px; height: 34px; border-radius: 50%; background: #E2C98A; border: 2px solid #F4EEE5;"></span>
+          </div>
+          <p style="font-size: 14px; color: #6B6258; margin: 0; line-height: 1.4;"><strong style="color: #2E2823;">320+ learners</strong><br>across 14 time zones</p>
+        </div>
+      </div>
+      <div style="position: relative; height: 580px; display: flex; align-items: flex-end; justify-content: center;">
+        <div style="position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: 112%; max-width: 500px; aspect-ratio: 1/1; border-radius: 50%; background: radial-gradient(circle at 50% 40%, rgba(248,222,140,0.9), rgba(240,198,95,0.55)); filter: blur(4px);"></div>
+        <div style="position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: 126%; max-width: 560px; aspect-ratio: 1/1; border-radius: 50%; border: 1.5px dashed rgba(190,140,55,0.4);"></div>
+        <div style="position: relative; z-index: 2; height: 100%; display: flex; align-items: flex-end; animation: rcHeroIn 1.15s cubic-bezier(0.16,1,0.3,1) both; -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 82%, rgba(0,0,0,0.66) 91%, rgba(0,0,0,0.2) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, #000 0, #000 82%, rgba(0,0,0,0.66) 91%, rgba(0,0,0,0.2) 97%, rgba(0,0,0,0) 100%);"><img src="assets/rosie-soft.png" alt="Rosie, your Mandarin tutor" style="height: 113.98%; width: auto; max-width: none; object-fit: contain; object-position: bottom; filter: drop-shadow(2.5px 0 0 #FFFFFF) drop-shadow(-2.5px 0 0 #FFFFFF) drop-shadow(0 2.5px 0 #FFFFFF) drop-shadow(0 -2.5px 0 #FFFFFF) drop-shadow(0 26px 32px rgba(150,105,35,0.28)); display: block;"></div>
+        <div style="position: absolute; top: 8%; left: -10px; z-index: 3; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px 18px 18px 4px; padding: 14px 18px; box-shadow: 0 16px 32px -18px rgba(80,55,40,0.35); animation: rcFloat 7s ease-in-out infinite;" class="rc-hide-sm">
+          <div style="font-family: 'Noto Sans SC', sans-serif; font-size: 22px; font-weight: 700; color: #2A241F;">你好！</div>
+          <div style="font-size: 12.5px; color: #8A7C6B; margin-top: 2px;">let’s get started</div>
+        </div>
+        <div style="position: absolute; bottom: 8%; left: -6px; z-index: 3; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 14px; padding: 16px 20px; box-shadow: 0 16px 32px -18px rgba(80,55,40,0.35); animation: rcFloat 8s ease-in-out 1.2s infinite;" class="rc-hide-sm">
+          <div style="font-family: 'Newsreader', serif; font-size: 30px; color: #C2674F; line-height: 1;">4.96</div>
+          <div style="font-size: 12.5px; color: #6B6258; margin-top: 4px;">avg. lesson rating</div>
+        </div>
+        <div style="position: absolute; top: 40px; right: -6px; z-index: 3; background: #2E2823; color: #F4EEE5; border-radius: 12px; padding: 13px 17px; box-shadow: 0 16px 32px -18px rgba(80,55,40,0.4); animation: rcFloat 7.5s ease-in-out 0.6s infinite;" class="rc-hide-sm">
+          <div style="font-size: 12px; color: #B7AC9C;">Next opening</div>
+          <div style="font-size: 14.5px; font-weight: 600; margin-top: 3px;">Tue · 7:00 PM</div>
+        </div>
+        <!-- floating follow chip -->
+        <div style="position: absolute; bottom: 6%; right: -14px; z-index: 4; display: flex; align-items: center; gap: 10px; background: rgba(255,253,247,0.6); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border: 1px solid rgba(255,255,255,0.85); border-radius: 100px; padding: 9px 12px 9px 16px; box-shadow: 0 18px 36px -20px rgba(80,55,40,0.4);" class="rc-hide-sm">
+          <span style="font-size: 12.5px; font-weight: 700; color: #6B6258; letter-spacing: 0.02em;">Follow</span>
+          <a href="https://www.tiktok.com/@rosiechinese" target="_blank" rel="noopener" title="TikTok" style="width: 36px; height: 36px; border-radius: 50%; background: #111; display: grid; place-items: center; transition: transform 0.15s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M16.5 3c.3 2.1 1.6 3.6 3.7 3.9v2.5c-1.4.1-2.7-.3-3.9-1v5.9c0 3.3-2.5 5.7-5.6 5.7-2.9 0-5.2-2.2-5.2-5 0-3 2.5-5 5.6-4.7v2.6c-.4-.1-.9-.2-1.3-.2-1.3 0-2.3 1-2.3 2.3 0 1.4 1 2.4 2.3 2.4 1.4 0 2.5-1.1 2.5-2.7V3h4.2z"></path></svg>
+          </a>
+          <a href="https://www.xiaohongshu.com/user/profile/rosiechinese" target="_blank" rel="noopener" title="小红书" style="width: 36px; height: 36px; border-radius: 50%; background: #FF2442; display: grid; place-items: center; font-family: 'Newsreader', serif; font-size: 10px; font-weight: 600; color: #fff; line-height: 1; text-align: center; transition: transform 0.15s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">小红书</a>
+          <a href="https://www.youtube.com/@rosiechinese" target="_blank" rel="noopener" title="YouTube" style="width: 36px; height: 36px; border-radius: 50%; background: #FF0000; display: grid; place-items: center; transition: transform 0.15s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C15.9 4 12 4 12 4h0s-3.9 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.6c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s3.9 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.6c0-1.6-.2-3.3-.2-3.3zM10 14.5v-5l4 2.5-4 2.5z"></path></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- trust strip -->
+    <section style="border-top: 1px solid rgba(255,255,255,0.8); border-bottom: 1px solid rgba(210,175,100,0.3); background: rgba(255,253,244,0.35); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);">
+      <div style="max-width: 1180px; margin: 0 auto; padding: 26px 28px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap;" class="rc-pad">
+        <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #9A8A75;">Learners now at</span>
+        <div style="display: flex; align-items: center; gap: 42px; font-family: 'Newsreader', serif; font-size: 21px; color: #6B6258; flex-wrap: wrap;">
+          <span>Google</span><span>Bloomberg</span><span>Stanford</span><span>Reuters</span><span>UNICEF</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- self-intro video -->
+    <section class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 84px 28px 0;">
+      <div class="rc-2col" style="display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center;">
+        <div data-reveal="">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">A quick hello · 一分钟认识我</div>
+          <h2 style="font-family: 'Newsreader', serif; font-size: 38px; font-weight: 400; letter-spacing: -0.015em; margin: 0 0 16px; color: #2A241F;">Meet Rosie in 90 seconds</h2>
+          <p style="font-size: 16.5px; line-height: 1.65; color: #5C5349; margin: 0; max-width: 400px;">Who I am, how lessons feel, and why my students end up talking more than I do. No sign-up — just press play.</p>
+          <div style="display: flex; align-items: center; gap: 10px; margin: 22px 0 26px; font-size: 13.5px; color: #8A7C6B;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #6E7F5E;"></span>Subtitles in English &amp; 中文</div>
+          <button onClick="{{ goAbout }}" style="background: none; border: 1px solid #CDBFAD; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 600; color: #4A4138; padding: 13px 24px; border-radius: 100px;">Learn more about me →</button>
+        </div>
+        <div data-reveal="" data-rvd="120" style="position: relative; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; background: linear-gradient(150deg, #EBDCC0, #DCC6A1 55%, #CDB28C); border: 1px solid #E3D6C3; box-shadow: 0 34px 70px -36px rgba(80,55,40,0.5);">
+          <div style="position: absolute; top: 18px; left: 22px; font-family: 'Newsreader', serif; font-style: italic; font-size: 15px; color: rgba(74,65,56,0.75);">Self-introduction · 自我介绍</div>
+          <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+            <span style="width: 70px; height: 70px; border-radius: 50%; background: rgba(255,253,247,0.55); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 18px 40px -16px rgba(80,55,40,0.5); cursor: pointer; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform=''">
+              <svg width="20" height="20" viewBox="0 0 20 20"><path d="M6.5 3.5v13L17 10z" fill="#4A4138"></path></svg>
+            </span>
+          </div>
+          <div style="position: absolute; bottom: 16px; right: 18px; background: rgba(46,40,35,0.65); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 100px;">1:28</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- how it works -->
+    <section class="rc-pad rc-sec-pad" style="max-width: 1180px; margin: 0 auto; padding: 86px 28px 30px;">
+      <div style="text-align: center; max-width: 620px; margin: 0 auto 54px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">How it works</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 40px; font-weight: 400; letter-spacing: -0.015em; margin: 0; color: #2A241F;">Three small steps to a real conversation</h2>
+      </div>
+      <div class="rc-3col" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;" data-reveal="" data-rvd="100">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; padding: 30px 28px;">
+            <div style="font-family: 'Newsreader', serif; font-style: italic; font-size: 17px; color: #C2674F; margin-bottom: 18px;">{{ s.num }}</div>
+            <h3 style="font-size: 19px; font-weight: 700; margin: 0 0 10px; color: #2E2823;">{{ s.title }}</h3>
+            <p style="font-size: 14.5px; line-height: 1.6; color: #6B6258; margin: 0;">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- pricing preview -->
+    <section class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 70px 28px;">
+      <div class="rc-2col rc-darkbox" data-reveal="" style="background: #2E2823; border-radius: 24px; padding: 56px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 50px; align-items: center;">
+        <div>
+          <h2 style="font-family: 'Newsreader', serif; font-size: 38px; font-weight: 400; color: #F4EEE5; margin: 0 0 18px; letter-spacing: -0.01em;">Buy lessons the way that suits you</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #B7AC9C; margin: 0 0 28px;">Try one lesson, drop in single sessions, or commit to the 16-lesson package and save the most per hour.</p>
+          <button onClick="{{ goCourses }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 15.5px; font-weight: 600; padding: 14px 26px; border-radius: 100px;">See all course packs →</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{ courses }}" as="c" hint-placeholder-count="3">
+            <button onClick="{{ c.go }}" style="{{ c.miniStyle }}">
+              <div style="text-align: left;">
+                <div style="font-size: 15.5px; font-weight: 700; color: {{ c.miniInk }};">{{ c.name }} <span style="font-weight: 400; opacity: 0.7;">{{ c.zh }}</span></div>
+                <div style="font-size: 13px; color: {{ c.miniSub }}; margin-top: 3px;">{{ c.unit }}</div>
+              </div>
+              <div style="font-family: 'Newsreader', serif; font-size: 24px; color: {{ c.miniInk }};">{{ c.price }}</div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- student voices -->
+    <section style="padding: 50px 0 0; overflow: hidden;">
+      <div style="text-align: center; max-width: 620px; margin: 0 auto 40px; padding: 0 28px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Student stories</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 40px; font-weight: 400; letter-spacing: -0.015em; margin: 0; color: #2A241F;">320 learners. A few of their words.</h2>
+      </div>
+      <div class="rc-marquee rc-fadewrap" data-reveal="" style="overflow: hidden; ">
+        <div class="rc-marquee-track" style="display: flex; gap: 18px; width: max-content; animation: rcMarquee 55s linear infinite; padding: 6px 0;">
+          <sc-for list="{{ marqueeCards }}" as="t" hint-placeholder-count="6">
+            <div onClick="{{ t.open }}" class="rc-lift" style="flex: none; width: 340px; height: 218px; cursor: pointer; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 24px 26px; display: flex; flex-direction: column;">
+              <p style="font-family: 'Newsreader', serif; font-size: 16.5px; line-height: 1.5; color: #2A241F; margin: 0 0 14px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">“{{ t.quote }}”</p>
+              <div style="display: flex; align-items: center; gap: 11px; margin-top: auto;">
+                <span style="width: 34px; height: 34px; border-radius: 50%; background: {{ t.tint }};"></span>
+                <div style="flex: 1;">
+                  <div style="font-size: 13.5px; font-weight: 700; color: #2E2823;">{{ t.name }}</div>
+                  <div style="font-size: 12px; color: #8A7C6B;">{{ t.role }}</div>
+                </div>
+                <span style="font-size: 12.5px; font-weight: 700; color: #C2674F;">Read →</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="rc-fadewrap" style="margin: 46px auto 0;" data-reveal="">
+        <div class="rc-rail" style="display: flex; gap: 16px; padding: 6px 36px 14px;">
+          <sc-for list="{{ studentVideos }}" as="v" hint-placeholder-count="6">
+            <div onClick="{{ v.open }}" class="rc-lift" style="flex: none; width: 186px; aspect-ratio: 9/16; border-radius: 20px; position: relative; overflow: hidden; cursor: pointer; background: {{ v.g }}; border: 1px solid #E2D4BE; box-shadow: 0 22px 40px -26px rgba(80,55,40,0.45);">
+              <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+                <span style="width: 46px; height: 46px; border-radius: 50%; background: rgba(255,253,247,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 10px 24px -10px rgba(80,55,40,0.5);">
+                  <svg width="14" height="14" viewBox="0 0 14 14"><path d="M4.5 2.5v9l7-4.5z" fill="#4A4138"></path></svg>
+                </span>
+              </div>
+              <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 14px 14px; background: linear-gradient(to top, rgba(46,40,35,0.55), rgba(46,40,35,0));">
+                <div style="font-size: 13.5px; font-weight: 700; color: #FBF7F1;">{{ v.name }}</div>
+                <div style="font-size: 11.5px; color: rgba(251,247,241,0.8); margin-top: 2px;">{{ v.tag }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 0 28px;">
+        <div style="text-align: center; margin-top: 28px;">
+          <button onClick="{{ goTestimonials }}" style="background: none; border: 1px solid #C2A48E; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: #9A6A52; padding: 11px 22px; border-radius: 100px;">Read more student stories</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- guarantee -->
+    <section class="rc-pad" style="max-width: 860px; margin: 0 auto; padding: 76px 28px 0;" data-reveal="">
+      <div class="rc-wrap" style="display: flex; align-items: center; gap: 22px; background: rgba(255,253,247,0.55); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border: 1px solid rgba(255,255,255,0.8); border-radius: 20px; padding: 28px 32px; flex-wrap: wrap;">
+        <span style="flex: none; width: 52px; height: 52px; border-radius: 50%; background: #E7ECDF; display: grid; place-items: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 4.6-3 8.6-7 10-4-1.4-7-5.4-7-10V5l7-3z" fill="#6E7F5E"></path><path d="M8.5 12l2.4 2.4 4.6-4.8" stroke="#F4F1E8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+        <div style="flex: 1; min-width: 260px;">
+          <div style="font-size: 16.5px; font-weight: 700; color: #2E2823;">Love your first lesson — or it’s free.</div>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #6B6258; margin: 5px 0 0;">If the trial isn’t a fit, say so within 24 hours and I’ll refund every cent. No forms, no questions asked.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- closing CTA -->
+    <section class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 70px 28px 90px;" data-reveal="">
+      <div class="rc-darkbox" style="position: relative; overflow: hidden; background: #2E2823; border-radius: 26px; padding: 68px 56px; text-align: center;">
+        <div style="position: absolute; top: -140px; right: -100px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(229,155,130,0.28), rgba(229,155,130,0) 65%); pointer-events: none;"></div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 42px; font-weight: 400; letter-spacing: -0.015em; color: #F4EEE5; margin: 0 0 14px;">Ready for your first <span style="font-style: italic; color: #E59B82;">你好</span>?</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #B7AC9C; max-width: 460px; margin: 0 auto 30px;">One $35 trial lesson. Meet Rosie, map your plan — full refund if it’s not a fit.</p>
+        <div class="rc-wrap" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button onClick="{{ goTrial }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 30px; border-radius: 100px;">Book your trial lesson</button>
+          <button onClick="{{ goContact }}" style="background: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; color: #F4EEE5; padding: 15px 26px; border-radius: 100px;">Contact Rosie</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ===== ABOUT ===== -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+  <main data-screen-label="About" style="animation: rcFade 0.5s ease both;">
+    <!-- page head -->
+    <section class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 52px 28px 0;">
+      <div style="text-align: center; max-width: 560px; margin: 0 auto;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Meet your tutor</div>
+        <h1 class="rc-h1" style="font-family: 'Newsreader', serif; font-size: 46px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.06; margin: 0 0 10px; color: #2A241F;">Hi, I’m Rosie.</h1>
+        <p style="font-size: 16px; line-height: 1.6; color: #5C5349; margin: 0;">The short version of a long story — keep scrolling.</p>
+      </div>
+    </section>
+
+    <!-- sticky scroll story -->
+    <section class="rc-story" data-story="" style="position: relative; height: 600vh; margin-top: -8px;">
+      <div class="rc-stage" style="position: sticky; top: 72px; height: calc(100vh - 72px); display: flex; align-items: center; padding-bottom: 3vh;">
+        <div class="rc-2col rc-pad" style="width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 0.86fr 1.14fr; gap: 60px; align-items: center;">
+          <div data-story-photo="" style="position: relative; z-index: 1; transform: translate3d(0,132px,0); will-change: transform;">
+            <div style="position: relative; aspect-ratio: 3/4; max-height: 58vh; border-radius: 22px; overflow: hidden; background: #E7DAC4; box-shadow: 0 34px 66px -34px rgba(80,55,40,0.45);">
+              <div class="rc-photo rc-photo-0" style="{{ bioL0 }}"><img src="assets/rosie.png" alt="Rosie today" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%;"></div>
+              <div class="rc-photo" style="{{ bioL1 }}">
+                <div style="width: 100%; height: 100%; background: linear-gradient(155deg, #E5C9A3, #C98F63 60%, #A96F4A);"></div>
+                <div style="position: absolute; bottom: 22px; left: 24px; font-family: 'Noto Sans SC', sans-serif; font-size: 26px; font-weight: 700; color: rgba(255,251,242,0.9);">成都</div>
+              </div>
+              <div class="rc-photo" style="{{ bioL2 }}">
+                <div style="width: 100%; height: 100%; background: linear-gradient(155deg, #E8DCBE, #B9C7CE 58%, #8FA3B4);"></div>
+                <div style="position: absolute; bottom: 22px; left: 24px; font-family: 'Newsreader', serif; font-size: 26px; color: rgba(46,40,35,0.72);">California</div>
+              </div>
+              <div class="rc-photo" style="{{ bioL3 }}">
+                <div style="width: 100%; height: 100%; background: linear-gradient(155deg, #DDE3CE, #9FB08C 60%, #75886A);"></div>
+                <div style="position: absolute; bottom: 22px; left: 24px; font-family: 'Newsreader', serif; font-size: 26px; color: rgba(255,251,242,0.92);">In the classroom</div>
+              </div>
+            </div>
+            <div style="margin-top: 14px; text-align: center; font-family: 'Newsreader', serif; font-style: italic; font-size: 15.5px; color: #8A7C6B;">{{ bioCaption }}</div>
+          </div>
+          <div class="rc-textstack" style="position: relative; min-height: 400px;">
+            <sc-for list="{{ bioChapters }}" as="ch" hint-placeholder-count="4">
+              <div class="rc-chap" style="{{ ch.style }}">
+                <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">{{ ch.era }}</div>
+                <h2 style="font-family: 'Newsreader', serif; font-size: 36px; font-weight: 400; letter-spacing: -0.015em; line-height: 1.14; color: #2A241F; margin: 0 0 18px; max-width: 520px;">{{ ch.title }}</h2>
+                <p style="font-size: 17.5px; line-height: 1.75; color: #5C5349; margin: 0; max-width: 490px;">{{ ch.body }}</p>
+                <sc-if value="{{ ch.showCreds }}" hint-placeholder-val="">
+                  <div style="display: flex; gap: 9px; flex-wrap: wrap; margin-top: 26px;">
+                    <sc-for list="{{ credsInline }}" as="cr" hint-placeholder-count="3">
+                      <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,253,247,0.6); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); border: 1px solid rgba(255,255,255,0.85); border-radius: 100px; padding: 8px 17px; box-shadow: 0 12px 26px -18px rgba(80,55,40,0.4);">
+                        
+                        <span style="font-size: 12.5px; font-weight: 600; color: #5C5349; letter-spacing: 0.03em;">{{ cr }}</span>
+                      </span>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div class="rc-track" style="position: absolute; inset: 0; pointer-events: none;">
+        <div data-bio="0" style="height: 260vh;"></div>
+        <div data-bio="1" style="height: 110vh;"></div>
+        <div data-bio="2" style="height: 110vh;"></div>
+        <div data-bio="3" style="height: 120vh;"></div>
+      </div>
+    </section>
+
+    <!-- how i teach -->
+    <section class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 96px 28px 0;">
+      <div style="text-align: center; max-width: 620px; margin: 0 auto 44px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">How I teach · 教学方式</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 40px; font-weight: 400; letter-spacing: -0.015em; margin: 0 0 12px; color: #2A241F;">Three rules I never break.</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #5C5349; margin: 0;">Nine years of teaching distilled into the method behind every lesson.</p>
+      </div>
+      <div class="rc-2col" style="display: grid; grid-template-columns: 0.94fr 1.06fr; gap: 52px; align-items: start;">
+        <div data-reveal="">
+          <div onClick="{{ openIntro }}" class="rc-lift" style="position: relative; z-index: 0; aspect-ratio: 16/10; border-radius: 22px; overflow: hidden; cursor: pointer; background: linear-gradient(150deg, #EBDCC0, #DCC6A1 55%, #CDB28C); border: 1px solid #E2D4BE; box-shadow: 0 26px 44px -34px rgba(80,55,40,0.45);">
+            <div style="position: absolute; top: 18px; left: 22px; font-family: 'Newsreader', serif; font-style: italic; font-size: 15px; color: rgba(74,65,56,0.75);">In her own words · 自我介绍</div>
+            <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+              <span style="width: 70px; height: 70px; border-radius: 50%; background: rgba(255,253,247,0.55); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 18px 40px -16px rgba(80,55,40,0.5);">
+                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M6.5 3.5v13L17 10z" fill="#4A4138"></path></svg>
+              </span>
+            </div>
+            <div style="position: absolute; bottom: 16px; right: 18px; background: rgba(46,40,35,0.65); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 100px;">2:04</div>
+          </div>
+          <div style="position: relative; z-index: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px;" data-reveal="" data-rvd="100">
+            <sc-for list="{{ aboutStats }}" as="st" hint-placeholder-count="4">
+              <div style="position: relative; overflow: hidden; background: rgba(38,32,27,0.82); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px 19px; box-shadow: 0 20px 40px -26px rgba(40,28,18,0.7), inset 0 1px 0 rgba(255,255,255,0.07);">
+                <div style="position: absolute; top: -46px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(244,212,120,0.16), rgba(244,212,120,0) 68%); pointer-events: none;"></div>
+                <div style="position: relative; font-family: 'Newsreader', serif; font-size: 30px; font-weight: 400; color: #F0C98E; line-height: 1; letter-spacing: -0.01em;">{{ st.n }}</div>
+                <div style="position: relative; font-size: 12px; color: #CCC0AD; margin-top: 8px; line-height: 1.4;">{{ st.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div data-reveal="" data-rvd="140">
+          <div style="display: grid; gap: 12px;">
+            <sc-for list="{{ philosophy }}" as="p" hint-placeholder-count="3">
+              <div style="display: flex; gap: 16px; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 15px; padding: 22px 24px;">
+                <span style="flex: none; width: 38px; height: 38px; border-radius: 11px; background: #EBDFD2; display: grid; place-items: center; font-family: 'Newsreader', serif; font-style: italic; color: #C2674F; font-size: 17px;">{{ p.n }}</span>
+                <div>
+                  <h3 style="font-size: 17px; font-weight: 700; margin: 0 0 7px; color: #2E2823;">{{ p.title }}</h3>
+                  <p style="font-size: 14.5px; line-height: 1.65; color: #6B6258; margin: 0; text-wrap: pretty;">{{ p.body }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- real lessons -->
+    <section style="padding: 96px 0 0;">
+      <div class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 0 28px;">
+        <div style="text-align: center; max-width: 620px; margin: 0 auto 44px;" data-reveal="">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Real lessons · 真实课堂</div>
+          <h2 style="font-family: 'Newsreader', serif; font-size: 40px; font-weight: 400; letter-spacing: -0.015em; margin: 0 0 12px; color: #2A241F;">See a lesson before you book one.</h2>
+          <p style="font-size: 16.5px; line-height: 1.6; color: #5C5349; margin: 0;">Unedited recordings, shared with each student’s permission — so you know exactly what fifty minutes looks like.</p>
+        </div>
+        <div class="rc-3col" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;" data-reveal="" data-rvd="100">
+          <sc-for list="{{ realLessons }}" as="r" hint-placeholder-count="4">
+            <div onClick="{{ r.open }}" class="rc-lift" style="cursor: pointer; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; overflow: hidden;">
+              <div style="position: relative; aspect-ratio: 16/9; background: {{ r.g }};">
+                <div style="position: absolute; top: 14px; left: 16px; background: rgba(46,40,35,0.55); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 11px; border-radius: 100px;">{{ r.level }}</div>
+                <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+                  <span style="width: 58px; height: 58px; border-radius: 50%; background: rgba(255,253,247,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 12px 26px -12px rgba(80,55,40,0.5);">
+                    <svg width="17" height="17" viewBox="0 0 20 20"><path d="M6.5 3.5v13L17 10z" fill="#4A4138"></path></svg>
+                  </span>
+                </div>
+                <div style="position: absolute; bottom: 14px; right: 16px; background: rgba(46,40,35,0.6); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 100px;">{{ r.len }}</div>
+              </div>
+              <div style="padding: 20px 22px 22px;">
+                <div style="font-size: 16.5px; font-weight: 700; color: #2E2823; line-height: 1.35;">{{ r.name }}</div>
+                <p style="font-size: 13.5px; line-height: 1.6; color: #6B6258; margin: 7px 0 0;">{{ r.tag }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- more videos -->
+    <section style="padding: 96px 0 0;">
+      <div class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 0 28px;">
+      <div style="text-align: center; max-width: 620px; margin: 0 auto 44px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">More from Rosie · 更多视频</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 40px; font-weight: 400; letter-spacing: -0.015em; margin: 0 0 12px; color: #2A241F;">Mini-lessons, every week.</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #5C5349; margin: 0;">Free bite-size Chinese on whichever app you already live in.</p>
+      </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 9px; margin: -22px 0 32px;" data-reveal="">
+          <a href="https://www.tiktok.com/@rosiechinese" target="_blank" rel="noopener" title="TikTok" style="width: 40px; height: 40px; border-radius: 50%; background: #111; display: grid; place-items: center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M16.5 3c.3 2.1 1.6 3.6 3.7 3.9v2.5c-1.4.1-2.7-.3-3.9-1v5.9c0 3.3-2.5 5.7-5.6 5.7-2.9 0-5.2-2.2-5.2-5 0-3 2.5-5 5.6-4.7v2.6c-.4-.1-.9-.2-1.3-.2-1.3 0-2.3 1-2.3 2.3 0 1.4 1 2.4 2.3 2.4 1.4 0 2.5-1.1 2.5-2.7V3h4.2z"></path></svg>
+          </a>
+          <a href="https://www.xiaohongshu.com/user/profile/rosiechinese" target="_blank" rel="noopener" title="小红书" style="width: 40px; height: 40px; border-radius: 50%; background: #FF2442; display: grid; place-items: center; font-family: 'Newsreader', serif; font-size: 10px; font-weight: 600; color: #fff; line-height: 1; text-align: center; text-decoration: none;">小红书</a>
+          <a href="https://www.youtube.com/@rosiechinese" target="_blank" rel="noopener" title="YouTube" style="width: 40px; height: 40px; border-radius: 50%; background: #FF0000; display: grid; place-items: center;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C15.9 4 12 4 12 4h0s-3.9 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.6c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s3.9 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.6c0-1.6-.2-3.3-.2-3.3zM10 14.5v-5l4 2.5-4 2.5z"></path></svg>
+          </a>
+        </div>
+      </div>
+      <div class="rc-fadewrap" data-reveal="">
+        <div class="rc-rail" style="display: flex; gap: 16px; padding: 6px 36px 14px;">
+          <sc-for list="{{ rosieVideos }}" as="v" hint-placeholder-count="5">
+            <div onClick="{{ v.open }}" class="rc-lift" style="flex: none; width: 196px; aspect-ratio: 9/16; border-radius: 20px; position: relative; overflow: hidden; cursor: pointer; background: {{ v.g }}; border: 1px solid #E2D4BE; box-shadow: 0 22px 40px -26px rgba(80,55,40,0.45);">
+              <div style="position: absolute; top: 14px; left: 14px; background: rgba(46,40,35,0.5); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; padding: 5px 10px; border-radius: 100px;">{{ v.platform }}</div>
+              <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+                <span style="width: 46px; height: 46px; border-radius: 50%; background: rgba(255,253,247,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 10px 24px -10px rgba(80,55,40,0.5);">
+                  <svg width="14" height="14" viewBox="0 0 14 14"><path d="M4.5 2.5v9l7-4.5z" fill="#4A4138"></path></svg>
+                </span>
+              </div>
+              <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 14px 14px; background: linear-gradient(to top, rgba(46,40,35,0.6), rgba(46,40,35,0));">
+                <div style="font-size: 13.5px; font-weight: 700; color: #FBF7F1; line-height: 1.3;">{{ v.name }}</div>
+                <div style="font-size: 11.5px; color: rgba(251,247,241,0.8); margin-top: 3px;">{{ v.tag }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- closing CTA -->
+    <section class="rc-pad" style="max-width: 1180px; margin: 0 auto; padding: 96px 28px 100px;" data-reveal="">
+      <div class="rc-darkbox" style="position: relative; overflow: hidden; background: #2E2823; border-radius: 26px; padding: 68px 56px; text-align: center;">
+        <div style="position: absolute; top: -140px; right: -100px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(229,155,130,0.28), rgba(229,155,130,0) 65%); pointer-events: none;"></div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 42px; font-weight: 400; letter-spacing: -0.015em; color: #F4EEE5; margin: 0 0 14px;">Curious if we’re a <span style="font-style: italic; color: #E59B82;">fit</span>?</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #B7AC9C; max-width: 460px; margin: 0 auto 30px;">Start with a $35 trial — full refund if it isn’t. Or just say hi first, I answer everything myself.</p>
+        <div class="rc-wrap" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button onClick="{{ goTrial }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 30px; border-radius: 100px;">Book a trial lesson</button>
+          <button onClick="{{ goContact }}" style="background: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; color: #F4EEE5; padding: 15px 26px; border-radius: 100px;">Message me</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ===== COURSES ===== -->
+  <sc-if value="{{ isCourses }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both; max-width: 1180px; margin: 0 auto; padding: 70px 28px 90px;" class="rc-pad">
+    <div style="text-align: center; max-width: 640px; margin: 0 auto 52px;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Course packs · 课程</div>
+      <h1 class="rc-h1" style="font-family: 'Newsreader', serif; font-size: 46px; font-weight: 400; letter-spacing: -0.02em; margin: 0 0 16px; color: #2A241F;">Choose how you want to learn</h1>
+      <p style="font-size: 17px; line-height: 1.6; color: #5C5349; margin: 0;">Every lesson is a private 50 minutes with Rosie. Pick a single session, or save the most with the 16-lesson package.</p>
+    </div>
+    <div class="rc-3col" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: start;">
+      <sc-for list="{{ courseCards }}" as="c" hint-placeholder-count="3">
+        <div class="rc-lift" style="{{ c.cardStyle }}">
+          <sc-if value="{{ c.tag }}" hint-placeholder-val="">
+            <div style="display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; background: #C2674F; color: #FBF4EE; border-radius: 100px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 18px;">{{ c.tag }}</div>
+          </sc-if>
+          <div style="font-size: 18px; font-weight: 700; color: {{ c.ink }};">{{ c.name }} <span style="font-weight: 400; opacity: 0.65;">{{ c.zh }}</span></div>
+          <div style="display: flex; align-items: baseline; gap: 8px; margin: 14px 0 4px;">
+            <span style="font-family: 'Newsreader', serif; font-size: 46px; color: {{ c.ink }}; line-height: 1;">{{ c.price }}</span>
+            <sc-if value="{{ c.per }}" hint-placeholder-val="">
+              
+            </sc-if>
+            <sc-if value="{{ c.off }}" hint-placeholder-val="">
+              <span style="font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; padding: 5px 11px; border-radius: 100px; background: #6E7F5E; color: #F4F1E8;">{{ c.off }}</span>
+            </sc-if>
+          </div>
+          <div style="font-size: 13.5px; color: {{ c.sub }}; margin-bottom: 18px;">{{ c.unit }}</div>
+          <p style="font-size: 14.5px; line-height: 1.6; color: {{ c.sub }}; margin: 0 0 22px; min-height: 66px;">{{ c.blurb }}</p>
+          <button onClick="{{ c.book }}" style="{{ c.btnStyle }}">{{ c.cta }}</button>
+          <div style="height: 1px; background: {{ c.line }}; margin: 24px 0;"></div>
+          <div style="display: grid; gap: 12px;">
+            <sc-for list="{{ c.features }}" as="f" hint-placeholder-count="4">
+              <div style="display: flex; gap: 11px; align-items: flex-start; font-size: 14px; line-height: 1.45; color: {{ c.featInk }};">
+                <span style="flex: none; width: 18px; height: 18px; border-radius: 50%; background: {{ c.dot }}; color: {{ c.dotInk }}; display: grid; place-items: center; font-size: 11px; margin-top: 1px;">✓</span>
+                <span>{{ f }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align: center; margin-top: 38px; font-size: 14px; color: #8A7C6B;">All prices in USD · Lessons can be rescheduled up to 12 hours ahead · Unused package lessons never expire · Trial is fully refundable</div>
+
+    <!-- FAQ -->
+    <section style="max-width: 720px; margin: 0 auto; padding: 84px 0 0;">
+      <div style="text-align: center; margin-bottom: 34px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">FAQ · 常见问题</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 46px; font-weight: 400; letter-spacing: -0.015em; margin: 0; color: #2A241F">Questions, answered</h2>
+      </div>
+      <div style="display: grid; gap: 12px;" data-reveal="" data-rvd="100">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; overflow: hidden;">
+            <button onClick="{{ f.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: none; border: none; cursor: pointer; font-family: inherit; text-align: left; padding: 20px 24px;">
+              <span style="font-size: 15.5px; font-weight: 700; color: #2E2823;">{{ f.q }}</span>
+              <span style="{{ f.chev }}">+</span>
+            </button>
+            <div style="{{ f.bodyStyle }}">
+              <div style="overflow: hidden;">
+                <p style="font-size: 14.5px; line-height: 1.65; color: #6B6258; margin: 0; padding: 0 24px 20px;">{{ f.a }}</p>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- closing CTA -->
+    <section style="padding: 76px 0 0;" data-reveal="">
+      <div class="rc-darkbox" style="position: relative; overflow: hidden; background: #2E2823; border-radius: 26px; padding: 60px 56px; text-align: center;">
+        <div style="position: absolute; top: -140px; right: -100px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(229,155,130,0.28), rgba(229,155,130,0) 65%); pointer-events: none;"></div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 38px; font-weight: 400; letter-spacing: -0.015em; color: #F4EEE5; margin: 0 0 14px;">Still deciding? Start small.</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #B7AC9C; max-width: 460px; margin: 0 auto 28px;">The $35 trial is 50 real minutes with Rosie — and it’s free if it isn’t a fit.</p>
+        <div class="rc-wrap" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button onClick="{{ goTrial }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 30px; border-radius: 100px;">Book the trial</button>
+          <button onClick="{{ goContact }}" style="background: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; color: #F4EEE5; padding: 15px 26px; border-radius: 100px;">Ask a question first</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <sc-if value="{{ isTestimonials }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both; max-width: 1180px; margin: 0 auto; padding: 70px 28px 90px;" data-comment-anchor="caa1548319-main" class="rc-pad">
+    <div style="text-align: center; max-width: 640px; margin: 0 auto 52px;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Student stories</div>
+      <h1 class="rc-h1" style="font-family: 'Newsreader', serif; font-size: 46px; font-weight: 400; letter-spacing: -0.02em; margin: 0 0 16px; color: #2A241F;">Conversations that changed things</h1>
+      <p style="font-size: 17px; line-height: 1.6; color: #5C5349; margin: 0;">Real words from learners across 14 time zones.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 30px; font-size: 13.5px; color: #8A7C6B;" data-reveal="">
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: #6E7F5E;"></span>Tap any card to open it in full
+    </div>
+    <div class="rc-tcols" style="columns: 3; column-gap: 22px;">
+      <sc-for list="{{ storyItems }}" as="t" hint-placeholder-count="9">
+        <div data-reveal="" data-rvd="{{ t.delay }}" style="break-inside: avoid; margin-bottom: 22px;">
+        <div onClick="{{ t.open }}" class="rc-lift" style="{{ t.cardStyle }}">
+          <sc-if value="{{ t.isVideo }}" hint-placeholder-val="">
+            <div style="position: relative; aspect-ratio: 3/4.4; background: {{ t.g }};">
+              <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+                <span style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,253,247,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 10px 24px -10px rgba(80,55,40,0.5);">
+                  <svg width="16" height="16" viewBox="0 0 14 14"><path d="M4.5 2.5v9l7-4.5z" fill="#4A4138"></path></svg>
+                </span>
+              </div>
+              <div style="position: absolute; top: 14px; left: 16px; background: rgba(46,40,35,0.55); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 11px; border-radius: 100px;">Video</div>
+              <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 44px 18px 18px; background: linear-gradient(to top, rgba(46,40,35,0.62), rgba(46,40,35,0));">
+                <div style="font-size: 15px; font-weight: 700; color: #FBF7F1;">{{ t.name }}</div>
+                <div style="font-size: 12px; color: rgba(251,247,241,0.82); margin-top: 3px;">{{ t.tag }}</div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ t.isQuote }}" hint-placeholder-val="{{ true }}">
+            <div style="padding: 28px;">
+              <div style="font-family: 'Newsreader', serif; font-size: 44px; line-height: 0.4; color: #DFB7A4;">“</div>
+              <p style="font-family: 'Newsreader', serif; font-size: 19px; line-height: 1.5; color: #2A241F; margin: 14px 0 20px; letter-spacing: -0.005em; display: -webkit-box; -webkit-line-clamp: 14; -webkit-box-orient: vertical; overflow: hidden;">{{ t.quote }}</p>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="width: 40px; height: 40px; border-radius: 50%; background: {{ t.tint }};"></span>
+                <div style="flex: 1;">
+                  <div style="font-size: 14.5px; font-weight: 700; color: #2E2823;">{{ t.name }}</div>
+                  <div style="font-size: 12.5px; color: #8A7C6B;">{{ t.role }}</div>
+                </div>
+                <span style="font-size: 12.5px; font-weight: 700; color: #C2674F;">Read →</span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- closing CTA -->
+    <section style="padding: 66px 0 0;" data-reveal="">
+      <div class="rc-darkbox" style="position: relative; overflow: hidden; background: #2E2823; border-radius: 26px; padding: 60px 56px; text-align: center;">
+        <div style="position: absolute; top: -140px; right: -100px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(229,155,130,0.28), rgba(229,155,130,0) 65%); pointer-events: none;"></div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 38px; font-weight: 400; letter-spacing: -0.015em; color: #F4EEE5; margin: 0 0 14px;">Your story could be the next one.</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #B7AC9C; max-width: 440px; margin: 0 auto 28px;">Start with a $35 trial — full refund if it’s not a fit.</p>
+        <div class="rc-wrap" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button onClick="{{ goTrial }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 30px; border-radius: 100px;">Book your trial</button>
+          <button onClick="{{ goContact }}" style="background: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; color: #F4EEE5; padding: 15px 26px; border-radius: 100px;">Contact Rosie</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ===== SCHEDULING ===== -->
+  <sc-if value="{{ isSchedule }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both; max-width: 1080px; margin: 0 auto; padding: 56px 28px 96px;" class="rc-pad">
+    <button onClick="{{ goCourses }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: #8A7C6B; padding: 0 0 22px;">← Back to course packs</button>
+    <div class="rc-2col" style="display: grid; grid-template-columns: 1fr 340px; gap: 30px; align-items: start;">
+      <!-- calendar -->
+      <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 20px; padding: 30px 32px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 27px; font-weight: 400; color: #2A241F; margin: 0;">Pick a time with Rosie</h1>
+          <div style="font-size: 13px; color: #8A7C6B; display: flex; align-items: center; gap: 7px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #6E7F5E;"></span>Live calendar · GMT+8</div>
+        </div>
+        <p style="font-size: 14px; color: #6B6258; margin: 0 0 26px;">Only genuinely open slots are shown — synced from Rosie’s calendar in real time.</p>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <div style="font-size: 15px; font-weight: 700; color: #2E2823;">June 2026</div>
+          <div style="display: flex; gap: 6px;">
+            <span style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid #E2D6C5; display: grid; place-items: center; color: #B7AC9C; font-size: 15px;">‹</span>
+            <span style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid #E2D6C5; display: grid; place-items: center; color: #6B6258; font-size: 15px;">›</span>
+          </div>
+        </div>
+
+        <div class="rc-week" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 28px;">
+          <sc-for list="{{ schedDays }}" as="d" hint-placeholder-count="7">
+            <button onClick="{{ d.go }}" disabled="{{ d.disabled }}" style="{{ d.style }}">
+              <span style="font-size: 12px; font-weight: 600; opacity: 0.7;">{{ d.name }}</span>
+              <span style="font-family: 'Newsreader', serif; font-size: 22px; line-height: 1.1;">{{ d.num }}</span>
+              <span style="{{ d.dotStyle }}">{{ d.countLabel }}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #9A8A75; margin-bottom: 14px;">{{ slotsHeading }}</div>
+        <sc-if value="{{ hasSlots }}" hint-placeholder-val="{{ true }}">
+          <div class="rc-sched-slots" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+            <sc-for list="{{ schedSlots }}" as="t" hint-placeholder-count="6">
+              <button onClick="{{ t.go }}" style="{{ t.style }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noSlots }}" hint-placeholder-val="">
+          <div style="text-align: center; padding: 30px; background: #F2EADE; border-radius: 12px; color: #8A7C6B; font-size: 14px;">No openings this day — try another date.</div>
+        </sc-if>
+      </div>
+
+      <!-- summary -->
+      <div class="rc-sticky" style="position: sticky; top: 100px; background: #2E2823; border-radius: 20px; padding: 28px; color: #F4EEE5;">
+        <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <span style="width: 46px; height: 46px; border-radius: 50%; background: #D9B79F; display: grid; place-items: center; font-family: 'Newsreader', serif; font-style: italic; color: #5A3D2E; font-size: 20px;">R</span>
+          <div>
+            <div style="font-size: 15px; font-weight: 700;">Rosie</div>
+            <div style="font-size: 12.5px; color: #B7AC9C;">Chinese tutor · 4.96 ★</div>
+          </div>
+        </div>
+        <div style="padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-size: 12px; color: #B7AC9C; margin-bottom: 4px;">Course pack</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15.5px; font-weight: 700;">{{ schedCourseName }} <span style="opacity: 0.6; font-weight: 400;">{{ schedCourseZh }}</span></span>
+            <span style="font-family: 'Newsreader', serif; font-size: 22px; color: #E59B82;">{{ schedCoursePrice }}</span>
+          </div>
+          <div style="font-size: 12.5px; color: #B7AC9C; margin-top: 4px;">{{ schedCourseUnit }}</div>
+        </div>
+        <div style="padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-size: 12px; color: #B7AC9C; margin-bottom: 8px;">Your selected time</div>
+          <sc-if value="{{ slotChosen }}" hint-placeholder-val="">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="width: 36px; height: 36px; border-radius: 9px; background: #C2674F; display: grid; place-items: center; font-size: 17px;">📅</span>
+              <div style="font-size: 15px; font-weight: 600;">{{ chosenLabel }}</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ slotNotChosen }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size: 14px; color: #8A7C6B; font-style: italic;">Select a day and time →</div>
+          </sc-if>
+        </div>
+        <button onClick="{{ goCheckout }}" disabled="{{ continueDisabled }}" style="{{ continueStyle }}">{{ continueLabel }}</button>
+        <p style="font-size: 12px; color: #8A7C6B; text-align: center; margin: 14px 0 0;">Free cancellation up to 12h before</p>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ===== CHECKOUT ===== -->
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both; max-width: 980px; margin: 0 auto; padding: 56px 28px 96px;" class="rc-pad">
+    <button onClick="{{ goSchedule }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: #8A7C6B; padding: 0 0 22px;">← Back to scheduling</button>
+    <h1 style="font-family: 'Newsreader', serif; font-size: 38px; font-weight: 400; letter-spacing: -0.02em; color: #2A241F; margin: 0 0 32px;">Checkout</h1>
+    <div class="rc-2col" style="display: grid; grid-template-columns: 1fr 360px; gap: 30px; align-items: start;">
+      <!-- form -->
+      <div style="display: grid; gap: 20px;">
+        <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 28px;">
+          <h2 style="font-size: 16px; font-weight: 700; color: #2E2823; margin: 0 0 18px;">Your details</h2>
+          <div style="display: grid; gap: 14px;">
+            <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">Full name</span><input value="James Miller" style="width: 100%; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; color: #2E2823;"></label>
+            <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">Email</span><input value="james.miller@email.com" style="width: 100%; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; color: #2E2823;"></label>
+          </div>
+        </div>
+        <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 28px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+            <h2 style="font-size: 16px; font-weight: 700; color: #2E2823; margin: 0;">Payment</h2>
+            <div style="display: flex; gap: 6px; align-items: center; font-size: 12px; color: #8A7C6B;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #6E7F5E;"></span>Secured by Stripe</div>
+          </div>
+          <div style="display: grid; gap: 14px;">
+            <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">Card number</span>
+              <div style="display: flex; align-items: center; gap: 10px; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF;">
+                <span style="font-family: inherit; font-size: 14.5px; color: #2E2823; flex: 1;">4242 4242 4242 4242</span>
+                <span style="width: 30px; height: 19px; border-radius: 4px; background: #C2674F;"></span>
+                <span style="width: 30px; height: 19px; border-radius: 4px; background: #E2C98A;"></span>
+              </div>
+            </label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">Expiry</span><input value="08 / 28" style="width: 100%; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; color: #2E2823;"></label>
+              <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">CVC</span><input value="•••" style="width: 100%; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; color: #2E2823;"></label>
+            </div>
+          </div>
+        </div>
+        <!-- auto-subscription -->
+        <sc-if value="{{ showAutoRenew }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ toggleRenew }}" style="{{ renewCardStyle }}">
+          <div style="display: flex; align-items: flex-start; gap: 14px; text-align: left;">
+            <span style="{{ renewToggleStyle }}"><span style="{{ renewKnobStyle }}"></span></span>
+            <div>
+              <div style="font-size: 15px; font-weight: 700; color: #2E2823;">Auto-renew my package</div>
+              <p style="font-size: 13.5px; line-height: 1.55; color: #6B6258; margin: 5px 0 0;">When you finish your 16 lessons, we’ll renew at $960 so you never lose momentum. Cancel anytime from your dashboard.</p>
+            </div>
+          </div>
+        </button>
+        </sc-if>
+      </div>
+      <!-- summary -->
+      <div class="rc-sticky" style="position: sticky; top: 100px; background: #2E2823; border-radius: 18px; padding: 28px; color: #F4EEE5;">
+        <h2 style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #B7AC9C; margin: 0 0 18px;">Order summary</h2>
+        <div style="padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-size: 16px; font-weight: 700;">{{ schedCourseName }} <span style="opacity: 0.6; font-weight: 400;">{{ schedCourseZh }}</span></div>
+          <div style="font-size: 13px; color: #B7AC9C; margin-top: 4px;">{{ schedCourseUnit }}</div>
+        </div>
+        <div style="padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-size: 12px; color: #B7AC9C; margin-bottom: 6px;">First lesson</div>
+          <div style="font-size: 14.5px; font-weight: 600;">{{ checkoutSlot }}</div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0 6px;">
+          <span style="font-size: 14px; color: #B7AC9C;">Subtotal</span>
+          <span style="font-size: 14px;">{{ schedCoursePrice }}</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <span style="font-size: 14px; color: #B7AC9C;">Tax</span>
+          <span style="font-size: 14px;">$0.00</span>
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 18px 0 4px;">
+          <span style="font-size: 15px; font-weight: 700;">Total today</span>
+          <span style="font-family: 'Newsreader', serif; font-size: 30px; color: #E59B82;">{{ schedCoursePrice }}</span>
+        </div>
+        <div style="font-size: 12px; color: #8A7C6B; margin-bottom: 20px;">{{ renewNote }}</div>
+        <button onClick="{{ goDashboard }}" style="width: 100%; background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 15.5px; font-weight: 700; padding: 16px; border-radius: 100px;">Pay {{ schedCoursePrice }}</button>
+        <p style="font-size: 11.5px; color: #8A7C6B; text-align: center; margin: 12px 0 0; line-height: 1.5;">By paying you agree to the terms. Free cancellation of your first lesson up to 12h before.</p>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ===== STUDENT DASHBOARD ===== -->
+  <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both; max-width: 1180px; margin: 0 auto; padding: 44px 28px 96px;" class="rc-pad">
+    <div class="rc-app" style="display: grid; grid-template-columns: 248px 1fr; gap: 32px; align-items: start;">
+      <!-- sidebar -->
+      <aside class="rc-sticky" style="position: sticky; top: 100px; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 22px;">
+        <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid #EAE0D2;">
+          <span style="width: 46px; height: 46px; border-radius: 50%; background: #D9B79F; display: grid; place-items: center; font-weight: 700; color: #5A3D2E; font-size: 17px;">JM</span>
+          <div>
+            <div style="font-size: 15px; font-weight: 700; color: #2E2823;">James Miller</div>
+            <div style="font-size: 12px; color: #8A7C6B;">Package · 11/16</div>
+          </div>
+        </div>
+        <nav style="display: grid; gap: 4px; margin: 16px 0;">
+          <sc-for list="{{ dashNav }}" as="n" hint-placeholder-count="4">
+            <button onClick="{{ n.go }}" style="{{ n.style }}"><span>{{ n.icon }}</span>{{ n.label }}</button>
+          </sc-for>
+        </nav>
+        <button onClick="{{ goSchedule }}" style="width: 100%; background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 100px;">Book next lesson</button>
+      </aside>
+
+      <!-- content -->
+      <div>
+        <!-- OVERVIEW -->
+        <sc-if value="{{ dashOverview }}" hint-placeholder-val="{{ true }}">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 6px;">Welcome back, James</h1>
+          <p style="font-size: 15px; color: #6B6258; margin: 0 0 28px;">You’re 11 lessons into your package — fluency is getting closer.</p>
+
+          <div style="background: #2E2823; border-radius: 20px; padding: 30px; color: #F4EEE5; margin-bottom: 22px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+              <div>
+                <div style="font-size: 13px; color: #B7AC9C;">Lesson Package · 课包</div>
+                <div style="font-family: 'Newsreader', serif; font-size: 28px; margin-top: 2px;">11 <span style="color: #8A7C6B;">/ 16 lessons</span></div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 13px; color: #B7AC9C;">5 lessons left</div>
+                <div style="font-size: 13px; color: #E59B82; margin-top: 2px;">Auto-renews after #16</div>
+              </div>
+            </div>
+            <div style="height: 10px; border-radius: 100px; background: rgba(255,255,255,0.12); overflow: hidden;">
+              <div style="width: 68.75%; height: 100%; background: linear-gradient(90deg, #C2674F, #E59B82); border-radius: 100px;"></div>
+            </div>
+          </div>
+
+          <h2 style="font-size: 15px; font-weight: 700; color: #2E2823; margin: 0 0 14px;">Upcoming lessons</h2>
+          <div style="display: grid; gap: 12px; margin-bottom: 30px;">
+            <sc-for list="{{ studentUpcoming }}" as="l" hint-placeholder-count="2">
+              <div class="rc-wrap" style="display: flex; align-items: center; gap: 18px; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 14px; padding: 18px 22px;">
+                <div style="flex: none; text-align: center; width: 58px;">
+                  <div style="font-size: 12px; font-weight: 700; color: #C2674F; text-transform: uppercase;">{{ l.day }}</div>
+                  <div style="font-family: 'Newsreader', serif; font-size: 22px; color: #2E2823;">{{ l.time }}</div>
+                </div>
+                <div style="width: 1px; align-self: stretch; background: #EAE0D2;"></div>
+                <div style="flex: 1;">
+                  <div style="font-size: 15px; font-weight: 700; color: #2E2823;">{{ l.topic }}</div>
+                  <div style="font-size: 13px; color: #8A7C6B; margin-top: 2px;">{{ l.sub }}</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <span style="padding: 9px 16px; border-radius: 100px; background: #C2674F; color: #FBF4EE; font-size: 13px; font-weight: 600;">Join</span>
+                  <span style="padding: 9px 14px; border-radius: 100px; border: 1px solid #E2D6C5; color: #6B6258; font-size: 13px; font-weight: 600;">Reschedule</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div class="rc-2col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="background: #EBDFD2; border-radius: 16px; padding: 24px;">
+              <div style="font-size: 13px; font-weight: 700; color: #9A6A52; margin-bottom: 8px;">This month’s focus</div>
+              <p style="font-size: 14.5px; line-height: 1.55; color: #5C5349; margin: 0;">Business Mandarin &amp; meetings. Rosie set 3 phrases to practice before Thursday.</p>
+            </div>
+            <div style="background: #E7ECDF; border-radius: 16px; padding: 24px;">
+              <div style="font-size: 13px; font-weight: 700; color: #5E6E4E; margin-bottom: 8px;">Your streak</div>
+              <p style="font-size: 14.5px; line-height: 1.55; color: #4A5240; margin: 0;">9 weeks in a row. You’ve spoken Chinese for 9h 10m with Rosie this quarter.</p>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- LESSONS -->
+        <sc-if value="{{ dashLessons }}" hint-placeholder-val="">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 22px;">Lesson history</h1>
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; overflow: hidden;">
+            <sc-for list="{{ studentHistory }}" as="h" hint-placeholder-count="5">
+              <div style="display: flex; align-items: center; gap: 16px; padding: 16px 22px; border-bottom: 1px solid #F0E7DA;">
+                <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: {{ h.dot }}; color: {{ h.dotInk }}; display: grid; place-items: center; font-size: 13px;">{{ h.mark }}</span>
+                <div style="flex: 1;">
+                  <div style="font-size: 14.5px; font-weight: 600; color: #2E2823;">{{ h.topic }}</div>
+                  <div style="font-size: 12.5px; color: #8A7C6B; margin-top: 1px;">{{ h.date }}</div>
+                </div>
+                <span style="font-size: 12.5px; font-weight: 600; color: {{ h.statusInk }};">{{ h.status }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- BILLING -->
+        <sc-if value="{{ dashBilling }}" hint-placeholder-val="">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 22px;">Billing</h1>
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; padding: 26px; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div>
+                <div style="font-size: 15px; font-weight: 700; color: #2E2823;">Lesson Package · auto-renew</div>
+                <div style="font-size: 13.5px; color: #6B6258; margin-top: 3px;">Renews at $960 when lesson 16 is used · est. Aug 2026</div>
+              </div>
+              <button onClick="{{ toggleRenew }}" style="{{ billRenewStyle }}"><span style="{{ billKnobStyle }}"></span></button>
+            </div>
+          </div>
+          <h2 style="font-size: 14px; font-weight: 700; color: #2E2823; margin: 0 0 12px;">Payment history</h2>
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; overflow: hidden;">
+            <sc-for list="{{ studentPayments }}" as="p" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid #F0E7DA;">
+                <div>
+                  <div style="font-size: 14.5px; font-weight: 600; color: #2E2823;">{{ p.label }}</div>
+                  <div style="font-size: 12.5px; color: #8A7C6B; margin-top: 1px;">{{ p.date }} · {{ p.method }}</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 14.5px; font-weight: 700; color: #2E2823;">{{ p.amount }}</div>
+                  <div style="font-size: 12px; color: #6E7F5E;">{{ p.status }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- MESSAGES -->
+        <sc-if value="{{ dashMessages }}" hint-placeholder-val="">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 22px;">Messages with Rosie</h1>
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 14px; min-height: 360px;">
+            <sc-for list="{{ studentChat }}" as="m" hint-placeholder-count="4">
+              <div style="{{ m.row }}">
+                <div style="{{ m.bubble }}">{{ m.text }}<div style="{{ m.timeStyle }}">{{ m.time }}</div></div>
+              </div>
+            </sc-for>
+            <div style="margin-top: auto; display: flex; gap: 10px; padding-top: 16px; border-top: 1px solid #EAE0D2;">
+              <input placeholder="Message Rosie…" style="flex: 1; padding: 13px 16px; border: 1px solid #E2D6C5; border-radius: 100px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #2E2823;">
+              <button style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; padding: 0 22px; border-radius: 100px;">Send</button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ===== TEACHER PORTAL ===== -->
+  <sc-if value="{{ isTeacher }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: rcFade 0.5s ease both; max-width: 1180px; margin: 0 auto; padding: 44px 28px 96px;" class="rc-pad">
+    <div class="rc-app" style="display: grid; grid-template-columns: 248px 1fr; gap: 32px; align-items: start;">
+      <!-- sidebar -->
+      <aside class="rc-sticky" style="position: sticky; top: 100px; background: #2E2823; border-radius: 18px; padding: 22px; color: #F4EEE5;">
+        <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <span style="width: 46px; height: 46px; border-radius: 50%; background: #D9B79F; display: grid; place-items: center; font-family: 'Newsreader', serif; font-style: italic; color: #5A3D2E; font-size: 20px;">R</span>
+          <div>
+            <div style="font-size: 15px; font-weight: 700;">Rosie</div>
+            <div style="font-size: 12px; color: #B7AC9C;">Teacher portal</div>
+          </div>
+        </div>
+        <nav style="display: grid; gap: 4px; margin: 16px 0;">
+          <sc-for list="{{ teacherNav }}" as="n" hint-placeholder-count="4">
+            <button onClick="{{ n.go }}" style="{{ n.style }}"><span>{{ n.icon }}</span>{{ n.label }}</button>
+          </sc-for>
+        </nav>
+        <div style="background: rgba(255,255,255,0.06); border-radius: 12px; padding: 16px;">
+          <div style="font-size: 12px; color: #B7AC9C;">Today</div>
+          <div style="font-family: 'Newsreader', serif; font-size: 24px; margin-top: 2px;">4 lessons</div>
+          <div style="font-size: 12.5px; color: #E59B82; margin-top: 4px;">Next · 7:00 PM · James</div>
+        </div>
+      </aside>
+
+      <div>
+        <!-- LESSONS / TODAY -->
+        <sc-if value="{{ teacherLessons }}" hint-placeholder-val="{{ true }}">
+        <div style="animation: rcFade 0.4s ease both;">
+          <div class="rc-wrap" style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 4px;">Upcoming lessons</h1>
+              <p style="font-size: 14.5px; color: #6B6258; margin: 0;">Tuesday, June 24 · 4 lessons today</p>
+            </div>
+            <div style="display: flex; gap: 22px;">
+              <div><div style="font-family: 'Newsreader', serif; font-size: 26px; color: #C2674F;">23.5h</div><div style="font-size: 12px; color: #8A7C6B;">this week</div></div>
+              <div><div style="font-family: 'Newsreader', serif; font-size: 26px; color: #C2674F;">96%</div><div style="font-size: 12px; color: #8A7C6B;">attendance</div></div>
+            </div>
+          </div>
+          <div style="display: grid; gap: 12px;">
+            <sc-for list="{{ teacherLessonList }}" as="l" hint-placeholder-count="4">
+              <div class="rc-wrap" style="display: flex; align-items: center; gap: 20px; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 14px; padding: 18px 22px;">
+                <div style="flex: none; text-align: center; width: 86px;">
+                  <div style="font-size: 12px; font-weight: 700; color: #C2674F; text-transform: uppercase;">{{ l.day }}</div>
+                  <div style="font-family: 'Newsreader', serif; font-size: 22px; color: #2E2823;">{{ l.time }}</div>
+                </div>
+                <span style="flex: none; width: 42px; height: 42px; border-radius: 50%; background: {{ l.tint }}; display: grid; place-items: center; font-weight: 700; color: #5A3D2E; font-size: 14px;">{{ l.initials }}</span>
+                <div style="flex: 1;">
+                  <div style="font-size: 15px; font-weight: 700; color: #2E2823;">{{ l.name }}</div>
+                  <div style="font-size: 13px; color: #8A7C6B; margin-top: 1px;">{{ l.type }} · {{ l.topic }}</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <span style="padding: 9px 16px; border-radius: 100px; background: #2E2823; color: #F4EEE5; font-size: 13px; font-weight: 600;">Start</span>
+                  <span style="padding: 9px 14px; border-radius: 100px; border: 1px solid #E2D6C5; color: #6B6258; font-size: 13px; font-weight: 600;">Notes</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- STUDENTS -->
+        <sc-if value="{{ teacherStudents }}" hint-placeholder-val="">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 22px;">Students</h1>
+          <div class="rc-students" style="display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start;">
+            <div style="display: grid; gap: 10px;">
+              <sc-for list="{{ studentList }}" as="st" hint-placeholder-count="5">
+                <button onClick="{{ st.go }}" style="{{ st.cardStyle }}">
+                  <span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: {{ st.tint }}; display: grid; place-items: center; font-weight: 700; color: #5A3D2E; font-size: 13px;">{{ st.initials }}</span>
+                  <div style="flex: 1; text-align: left;">
+                    <div style="font-size: 14.5px; font-weight: 700; color: #2E2823;">{{ st.name }}</div>
+                    <div style="font-size: 12px; color: #8A7C6B;">{{ st.progressLabel }}</div>
+                  </div>
+                  <span style="{{ st.statusStyle }}">{{ st.status }}</span>
+                </button>
+              </sc-for>
+            </div>
+            <!-- detail -->
+            <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 28px;">
+              <div style="display: flex; align-items: center; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid #EAE0D2;">
+                <span style="width: 52px; height: 52px; border-radius: 50%; background: {{ activeTint }}; display: grid; place-items: center; font-weight: 700; color: #5A3D2E; font-size: 17px;">{{ activeInitials }}</span>
+                <div>
+                  <div style="font-size: 18px; font-weight: 700; color: #2E2823;">{{ activeName }}</div>
+                  <div style="font-size: 13px; color: #8A7C6B;">{{ activePlan }} · focus: {{ activeFocus }}</div>
+                </div>
+              </div>
+              <div style="padding: 22px 0; border-bottom: 1px solid #EAE0D2;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                  <span style="font-size: 13px; font-weight: 700; color: #6B6258;">Package progress</span>
+                  <span style="font-size: 13px; color: #2E2823; font-weight: 700;">{{ activeProgressLabel }}</span>
+                </div>
+                <div style="height: 9px; border-radius: 100px; background: #E6DACA; overflow: hidden;">
+                  <div style="width: {{ activeProgressPct }}; height: 100%; background: #C2674F; border-radius: 100px;"></div>
+                </div>
+                <div style="font-size: 12.5px; color: #8A7C6B; margin-top: 8px;">Next: {{ activeNext }}</div>
+              </div>
+              <div style="padding-top: 22px;">
+                <div style="font-size: 13px; font-weight: 700; color: #6B6258; margin-bottom: 12px;">Manage course pack</div>
+                <p style="font-size: 13.5px; line-height: 1.55; color: #8A7C6B; margin: 0 0 16px;">Can’t make a session? Skip it and the lesson rolls forward — the student keeps the same number of lessons.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                  <button onClick="{{ skipLesson }}" style="background: #2E2823; color: #F4EEE5; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; padding: 11px 18px; border-radius: 100px;">{{ skipLabel }}</button>
+                  <button style="background: none; border: 1px solid #E2D6C5; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #6B6258; padding: 10px 18px; border-radius: 100px;">Add a lesson</button>
+                  <button onClick="{{ goTeacherMessages }}" style="background: none; border: 1px solid #E2D6C5; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #6B6258; padding: 10px 18px; border-radius: 100px;">Message</button>
+                  <button style="background: none; border: 1px solid #E2D6C5; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #6B6258; padding: 10px 18px; border-radius: 100px;">View billing</button>
+                </div>
+                <sc-if value="{{ skipped }}" hint-placeholder-val="">
+                  <div style="margin-top: 16px; padding: 12px 16px; background: #E7ECDF; border-radius: 12px; font-size: 13px; color: #5E6E4E;">✓ Today’s lesson skipped — rolled forward to the next open slot. {{ activeName }} was notified.</div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- EARNINGS -->
+        <sc-if value="{{ teacherEarnings }}" hint-placeholder-val="">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 22px;">Earnings</h1>
+          <div class="rc-quad" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px;">
+            <div style="background: #2E2823; border-radius: 16px; padding: 22px; color: #F4EEE5;">
+              <div style="font-size: 12.5px; color: #B7AC9C;">This month</div>
+              <div style="font-family: 'Newsreader', serif; font-size: 32px; margin-top: 4px;">{{ earnMonth }}</div>
+              <div style="font-size: 12.5px; color: #6E9F5E; margin-top: 4px;">{{ earnDelta }} vs. last month</div>
+            </div>
+            <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; padding: 22px;">
+              <div style="font-size: 12.5px; color: #8A7C6B;">Lessons taught</div>
+              <div style="font-family: 'Newsreader', serif; font-size: 32px; margin-top: 4px; color: #2E2823;">{{ earnLessons }}</div>
+              <div style="font-size: 12.5px; color: #8A7C6B; margin-top: 4px;">this month</div>
+            </div>
+            <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; padding: 22px;">
+              <div style="font-size: 12.5px; color: #8A7C6B;">Pending payout</div>
+              <div style="font-family: 'Newsreader', serif; font-size: 32px; margin-top: 4px; color: #2E2823;">{{ earnPending }}</div>
+              <div style="font-size: 12.5px; color: #8A7C6B; margin-top: 4px;">clears Jul 1</div>
+            </div>
+            <div style="background: #EBDFD2; border-radius: 16px; padding: 22px;">
+              <div style="font-size: 12.5px; color: #9A6A52;">Avg / lesson</div>
+              <div style="font-family: 'Newsreader', serif; font-size: 32px; margin-top: 4px; color: #2E2823;">$68</div>
+              <div style="font-size: 12.5px; color: #9A6A52; margin-top: 4px;">after fees</div>
+            </div>
+          </div>
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 28px; margin-bottom: 22px;">
+            <div style="font-size: 14px; font-weight: 700; color: #2E2823; margin-bottom: 22px;">Revenue · last 12 months</div>
+            <div style="display: flex; align-items: flex-end; gap: 10px; height: 180px;">
+              <sc-for list="{{ earnBars }}" as="b" hint-placeholder-count="12">
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end;">
+                  <div style="width: 100%; height: {{ b.h }}; background: {{ b.bg }}; border-radius: 6px 6px 0 0;"></div>
+                  <span style="font-size: 11px; color: #8A7C6B;">{{ b.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; overflow: hidden;">
+            <sc-for list="{{ earnRows }}" as="r" hint-placeholder-count="4">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #F0E7DA;">
+                <div style="font-size: 14.5px; font-weight: 600; color: #2E2823;">{{ r.label }}</div>
+                <div style="display: flex; align-items: center; gap: 26px;">
+                  <span style="font-size: 13px; color: #8A7C6B;">{{ r.count }}</span>
+                  <span style="font-size: 14.5px; font-weight: 700; color: #2E2823; width: 90px; text-align: right;">{{ r.amount }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- MESSAGES -->
+        <sc-if value="{{ teacherMessages }}" hint-placeholder-val="">
+        <div style="animation: rcFade 0.4s ease both;">
+          <h1 style="font-family: 'Newsreader', serif; font-size: 34px; font-weight: 400; color: #2A241F; margin: 0 0 22px;">Messages</h1>
+          <div class="rc-app rc-msg" style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: start; height: 460px;">
+            <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 16px; overflow: hidden;">
+              <sc-for list="{{ threadList }}" as="th" hint-placeholder-count="4">
+                <div style="{{ th.style }}">
+                  <span style="flex: none; width: 38px; height: 38px; border-radius: 50%; background: {{ th.tint }}; display: grid; place-items: center; font-weight: 700; color: #5A3D2E; font-size: 12.5px;">{{ th.initials }}</span>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="font-size: 14px; font-weight: 700; color: #2E2823;">{{ th.name }}</div>
+                    <div style="font-size: 12px; color: #8A7C6B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ th.preview }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 14px; height: 100%;">
+              <div style="font-size: 14px; font-weight: 700; color: #2E2823; padding-bottom: 12px; border-bottom: 1px solid #EAE0D2;">James Miller</div>
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+                <sc-for list="{{ teacherChat }}" as="m" hint-placeholder-count="4">
+                  <div style="{{ m.row }}"><div style="{{ m.bubble }}">{{ m.text }}<div style="{{ m.timeStyle }}">{{ m.time }}</div></div></div>
+                </sc-for>
+              </div>
+              <div style="display: flex; gap: 10px; padding-top: 14px; border-top: 1px solid #EAE0D2;">
+                <input placeholder="Reply to James…" style="flex: 1; padding: 13px 16px; border: 1px solid #E2D6C5; border-radius: 100px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #2E2823;">
+                <button style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; padding: 0 22px; border-radius: 100px;">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ===== CONTACT ===== -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ true }}">
+  <main data-screen-label="Contact" style="animation: rcFade 0.5s ease both; max-width: 1180px; margin: 0 auto; padding: 74px 28px 100px;" class="rc-pad">
+    <div style="text-align: center; max-width: 560px; margin: 0 auto 50px;" data-reveal="">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Contact · 联系</div>
+      <h1 class="rc-h1" style="font-family: 'Newsreader', serif; font-size: 46px; font-weight: 400; letter-spacing: -0.02em; margin: 0 0 14px; color: #2A241F;">Say 你好.</h1>
+      <p style="font-size: 16.5px; line-height: 1.6; color: #5C5349; margin: 0;">Questions about lessons, levels, or scheduling? I read and answer everything myself — usually within a day.</p>
+    </div>
+    <div class="rc-2col" style="display: grid; grid-template-columns: 0.86fr 1.14fr; gap: 26px; align-items: stretch;">
+      <div style="display: grid; grid-template-rows: 1fr auto auto; gap: 14px;">
+        <div data-reveal="" style="position: relative; z-index: 0; min-height: 240px; border-radius: 20px; overflow: hidden; background: linear-gradient(155deg, #F1E3C6, #DEC49A 55%, #C9A97C); box-shadow: 0 24px 46px -34px rgba(80,55,40,0.4);">
+          <div style="position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Noto Sans SC', sans-serif; font-size: 66px; font-weight: 700; color: rgba(255,251,242,0.5);">你好</div>
+          <div style="position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; align-items: center; gap: 11px; background: rgba(255,253,247,0.6); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); border: 1px solid rgba(255,255,255,0.85); border-radius: 100px; padding: 9px 16px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #6E7F5E;"></span>
+            <span style="font-size: 13px; font-weight: 700; color: #4A4138;">Rosie · usually replies same day</span>
+          </div>
+        </div>
+        <a href="https://wa.me/8613800002688" target="_blank" rel="noopener" style="position: relative; z-index: 2; text-decoration: none; display: flex; align-items: center; gap: 16px; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 22px 24px;" data-reveal="">
+          <span style="flex: none; width: 46px; height: 46px; border-radius: 14px; background: #25D366; display: grid; place-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M20.45 3.6A11.8 11.8 0 0 0 12.04.1C5.5.1.18 5.42.18 11.96c0 2.09.55 4.13 1.58 5.93L.07 24l6.25-1.64a11.85 11.85 0 0 0 5.72 1.46h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.46-8.36M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 1 1 8.38 4.63m5.4-7.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.07-.12-.27-.2-.57-.35"></path></svg>
+          </span>
+          <div style="min-width: 0;">
+            <div style="font-size: 15.5px; font-weight: 700; color: #2E2823;">WhatsApp</div>
+            <div style="font-size: 13px; color: #8A7C6B; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">+86 138 ···· 2688 · fastest reply</div>
+          </div>
+          <span style="flex: none; margin-left: auto; color: #C2674F; font-weight: 600; font-size: 14px; white-space: nowrap;">Chat →</span>
+        </a>
+        <a href="mailto:hello@rosiechinese.com" style="position: relative; z-index: 2; text-decoration: none; display: flex; align-items: center; gap: 16px; background: #FBF7F1; border: 1px solid #EAE0D2; border-radius: 18px; padding: 22px 24px;" data-reveal="" data-rvd="80">
+          <span style="flex: none; width: 46px; height: 46px; border-radius: 14px; background: #C2674F; display: grid; place-items: center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7L4 6.5V18h16V6.5L12 12z"></path></svg>
+          </span>
+          <div style="min-width: 0;">
+            <div style="font-size: 15.5px; font-weight: 700; color: #2E2823;">Email</div>
+            <div style="font-size: 13px; color: #8A7C6B; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">hello@rosiechinese.com · within 24h</div>
+          </div>
+          <span style="flex: none; margin-left: auto; color: #C2674F; font-weight: 600; font-size: 14px; white-space: nowrap;">Write →</span>
+        </a>
+      </div>
+      <div style="background: rgba(255,253,247,0.55); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border: 1px solid rgba(255,255,255,0.8); border-radius: 20px; padding: 30px;" data-reveal="" data-rvd="120">
+        <h2 style="font-size: 16px; font-weight: 700; color: #2E2823; margin: 0 0 18px;">Send a message</h2>
+        <div style="display: grid; gap: 14px;">
+          <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">Your name</span><input placeholder="How should I call you?" style="width: 100%; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; color: #2E2823;"></label>
+          <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">Email</span><input placeholder="you@email.com" style="width: 100%; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 11px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; color: #2E2823;"></label>
+          <label style="display: block;"><span style="font-size: 12.5px; font-weight: 600; color: #6B6258; display: block; margin-bottom: 6px;">What are you hoping for?</span><textarea placeholder="Work, travel, family, HSK — tell me a little about your goal." style="width: 100%; min-height: 214px; resize: vertical; padding: 13px 15px; border: 1px solid #E2D6C5; border-radius: 14px; background: #FFFFFF; font-family: inherit; font-size: 14.5px; line-height: 1.55; color: #2E2823;"></textarea></label>
+          <button style="background: #2E2823; color: #F7F1E8; border: none; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 700; padding: 15px; border-radius: 100px;">Send message</button>
+          <p style="font-size: 12px; color: #8A7C6B; text-align: center; margin: 0;">Replies within 24 hours · no mailing lists, ever</p>
+        </div>
+      </div>
+    </div>
+    <!-- follow me -->
+    <section style="padding: 96px 0 0;">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 36px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">Follow me · 关注我</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 38px; font-weight: 400; letter-spacing: -0.015em; margin: 0 0 12px; color: #2A241F;">Learn a little every week</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #5C5349; margin: 0;">Bite-size lessons, tone drills, and everyday Chinese — free, on whichever app you already live in.</p>
+      </div>
+      <div class="rc-3col" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;" data-reveal="" data-rvd="100">
+        <sc-for list="{{ socialCards }}" as="s" hint-placeholder-count="3">
+          <a href="{{ s.href }}" target="_blank" rel="noopener" class="rc-lift" style="text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; background: rgba(255,253,247,0.55); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border: 1px solid rgba(255,255,255,0.8); border-radius: 22px; padding: 28px; box-shadow: 0 22px 46px -30px rgba(80,55,40,0.42);">
+            <div style="position: absolute; top: -70px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: {{ s.glow }}; pointer-events: none;"></div>
+            <div style="position: relative; display: flex; align-items: center; justify-content: space-between;">
+              <span style="width: 52px; height: 52px; border-radius: 16px; background: {{ s.bg }}; display: grid; place-items: center; box-shadow: 0 14px 26px -14px {{ s.shadow }};">
+                <sc-if value="{{ s.isRed }}" hint-placeholder-val="">
+                  <span style="font-family: 'Newsreader', serif; font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.02em;">小红书</span>
+                </sc-if>
+                <sc-if value="{{ s.isTikTok }}" hint-placeholder-val="">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M16.5 3c.3 2.1 1.6 3.6 3.7 3.9v2.5c-1.4.1-2.7-.3-3.9-1v5.9c0 3.3-2.5 5.7-5.6 5.7-2.9 0-5.2-2.2-5.2-5 0-3 2.5-5 5.6-4.7v2.6c-.4-.1-.9-.2-1.3-.2-1.3 0-2.3 1-2.3 2.3 0 1.4 1 2.4 2.3 2.4 1.4 0 2.5-1.1 2.5-2.7V3h4.2z"></path></svg>
+                </sc-if>
+                <sc-if value="{{ s.isYouTube }}" hint-placeholder-val="">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C15.9 4 12 4 12 4h0s-3.9 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.6c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s3.9 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.6c0-1.6-.2-3.3-.2-3.3zM10 14.5v-5l4 2.5-4 2.5z"></path></svg>
+                </sc-if>
+              </span>
+              <span style="font-size: 12.5px; font-weight: 700; color: #9A8A75;">{{ s.count }}</span>
+            </div>
+            <div style="position: relative;">
+              <div style="font-size: 18px; font-weight: 700; color: #2E2823;">{{ s.name }}</div>
+              <div style="font-size: 13.5px; color: #6B6258; margin-top: 4px;">{{ s.handle }}</div>
+              <p style="font-size: 13.5px; line-height: 1.55; color: #8A7C6B; margin: 12px 0 0;">{{ s.blurb }}</p>
+            </div>
+            <div style="position: relative; margin-top: auto; font-size: 14.5px; font-weight: 700; color: #C2674F;">{{ s.cta }}</div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- mini lessons -->
+    <section style="padding: 96px 0 0;">
+      <div style="text-align: center; max-width: 620px; margin: 0 auto 44px;" data-reveal="">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C2674F; margin-bottom: 14px;">More from Rosie · 更多视频</div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 40px; font-weight: 400; letter-spacing: -0.015em; margin: 0 0 12px; color: #2A241F;">Mini-lessons, every week.</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #5C5349; margin: 0;">Free bite-size Chinese while you decide — no sign-up needed.</p>
+      </div>
+      <div class="rc-fadewrap" data-reveal="">
+        <div class="rc-rail" style="display: flex; gap: 16px; padding: 6px 36px 14px;">
+          <sc-for list="{{ rosieVideos }}" as="v" hint-placeholder-count="5">
+            <div onClick="{{ v.open }}" class="rc-lift" style="flex: none; width: 196px; aspect-ratio: 9/16; border-radius: 20px; position: relative; overflow: hidden; cursor: pointer; background: {{ v.g }}; border: 1px solid #E2D4BE; box-shadow: 0 22px 40px -26px rgba(80,55,40,0.45);">
+              <div style="position: absolute; top: 14px; left: 14px; background: rgba(46,40,35,0.5); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; padding: 5px 10px; border-radius: 100px;">{{ v.platform }}</div>
+              <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+                <span style="width: 46px; height: 46px; border-radius: 50%; background: rgba(255,253,247,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 10px 24px -10px rgba(80,55,40,0.5);">
+                  <svg width="14" height="14" viewBox="0 0 14 14"><path d="M4.5 2.5v9l7-4.5z" fill="#4A4138"></path></svg>
+                </span>
+              </div>
+              <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 14px 14px; background: linear-gradient(to top, rgba(46,40,35,0.6), rgba(46,40,35,0));">
+                <div style="font-size: 13.5px; font-weight: 700; color: #FBF7F1; line-height: 1.3;">{{ v.name }}</div>
+                <div style="font-size: 11.5px; color: rgba(251,247,241,0.8); margin-top: 3px;">{{ v.tag }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- funnel CTA -->
+    <section style="padding: 96px 0 0;" data-reveal="">
+      <div class="rc-darkbox" style="position: relative; overflow: hidden; background: #2E2823; border-radius: 26px; padding: 68px 56px; text-align: center;">
+        <div style="position: absolute; top: -140px; right: -100px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(229,155,130,0.28), rgba(229,155,130,0) 65%); pointer-events: none;"></div>
+        <h2 style="font-family: 'Newsreader', serif; font-size: 42px; font-weight: 400; letter-spacing: -0.015em; color: #F4EEE5; margin: 0 0 14px;">Not sure where your Chinese <span style="font-style: italic; color: #E59B82;">stands</span>?</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #B7AC9C; max-width: 500px; margin: 0 auto 30px;">The $35 trial doubles as a level assessment — you leave with a written report either way. Full refund if it’s not a fit.</p>
+        <div class="rc-wrap" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button onClick="{{ goTrial }}" style="background: #C2674F; color: #FBF4EE; border: none; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 30px; border-radius: 100px;">Book a trial to evaluate</button>
+          <button onClick="{{ goCourses }}" style="background: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 600; color: #F4EEE5; padding: 15px 26px; border-radius: 100px;">See course packs</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ===== WARMTH SIMULATOR (dev tool) ===== -->
+  <div style="{{ warmOverlay }}"></div>
+  <button onClick="{{ toggleWarm }}" title="Warm temperature simulator" style="{{ warmBtn }}">◑</button>
+  <div style="{{ warmPanel }}">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px;">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #C8BCA9;">Warm temp</span>
+      <span style="font-size: 15px; font-weight: 700; color: #F4EEE5; font-variant-numeric: tabular-nums;">{{ warmLabel }}</span>
+    </div>
+    <div style="font-size: 11.5px; color: #9A8F80; margin-bottom: 13px;">≈ {{ warmKelvin }} white point</div>
+    <input type="range" min="0" max="100" step="1" value="{{ warmth }}" onChange="{{ setWarmth }}" onInput="{{ setWarmth }}" style="width: 100%; margin: 0; accent-color: #E59B82; cursor: pointer;">
+    <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #7C7264; margin-top: 6px;">
+      <span>neutral</span>
+      <span>very warm</span>
+    </div>
+    <div style="height: 1px; background: rgba(255,255,255,0.12); margin: 14px 0 13px;"></div>
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 11px;">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #C8BCA9;">Hue bias</span>
+      <span style="font-size: 13px; font-weight: 700; color: #F4EEE5; font-variant-numeric: tabular-nums;">{{ warmTintLabel }}</span>
+    </div>
+    <input type="range" min="-50" max="50" step="1" value="{{ warmTint }}" onChange="{{ setWarmTint }}" onInput="{{ setWarmTint }}" style="width: 100%; margin: 0; accent-color: #E3C25F; cursor: pointer;">
+    <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #7C7264; margin-top: 6px;">
+      <span>redder</span>
+      <span>yellower</span>
+    </div>
+  </div>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div onClick="{{ closePopup }}" style="{{ popOverlay }}">
+    <div style="{{ popCard }}">
+      <button onClick="{{ closePopup }}" style="position: absolute; top: 14px; right: 14px; z-index: 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,253,247,0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); cursor: pointer; font-family: inherit; font-size: 18px; color: #4A4138; display: grid; place-items: center; line-height: 1;">×</button>
+      <sc-if value="{{ popHasQuote }}" hint-placeholder-val="">
+        <div style="padding: 48px 46px 40px;">
+          <div style="font-family: 'Newsreader', serif; font-size: 64px; line-height: 0.4; color: #DFB7A4;">“</div>
+          <p style="font-family: 'Newsreader', serif; font-size: 25px; line-height: 1.5; color: #2A241F; margin: 26px 0 30px; letter-spacing: -0.008em; text-wrap: pretty;">{{ popQuote }}</p>
+          <div style="display: flex; align-items: center; gap: 14px; padding-top: 24px; border-top: 1px solid #EAE0D2;">
+            <span style="width: 46px; height: 46px; border-radius: 50%; background: {{ popTint }};"></span>
+            <div>
+              <div style="font-size: 15.5px; font-weight: 700; color: #2E2823;">{{ popName }}</div>
+              <div style="font-size: 13px; color: #8A7C6B; margin-top: 2px;">{{ popRole }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ popHasVideo }}" hint-placeholder-val="">
+        <div>
+          <div style="position: relative; aspect-ratio: {{ popRatio }}; background: {{ popG }};">
+            <div style="position: absolute; inset: 0; display: grid; place-items: center;">
+              <span style="width: 84px; height: 84px; border-radius: 50%; background: rgba(255,253,247,0.6); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border: 1px solid rgba(255,255,255,0.9); display: grid; place-items: center; box-shadow: 0 18px 40px -16px rgba(80,55,40,0.5);">
+                <svg width="26" height="26" viewBox="0 0 20 20"><path d="M6.5 3.5v13L17 10z" fill="#4A4138"></path></svg>
+              </span>
+            </div>
+            <div style="position: absolute; bottom: 16px; left: 18px; background: rgba(46,40,35,0.6); backdrop-filter: blur(8px); color: #F4EEE5; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 100px;">Video placeholder</div>
+          </div>
+          <div style="padding: 22px 26px 26px;">
+            <div style="font-size: 17px; font-weight: 700; color: #2E2823;">{{ popName }}</div>
+            <div style="font-size: 13.5px; color: #8A7C6B; margin-top: 4px;">{{ popTag }}</div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!--SCREENS_ANCHOR-->
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="border-top: 1px solid rgba(255,255,255,0.7); background: rgba(239,231,219,0.5); backdrop-filter: blur(12px);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 40px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 11px;">
+        <span style="width: 30px; height: 30px; border-radius: 50%; background: #C2674F; color: #FBF4EE; display: grid; place-items: center; font-family: 'Newsreader', serif; font-style: italic; font-size: 17px;">R</span>
+        <span style="font-family: 'Newsreader', serif; font-size: 19px; color: #2E2823;">RosieChinese</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="https://www.tiktok.com/@rosiechinese" target="_blank" rel="noopener" title="TikTok" style="width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.6); border: 1px solid rgba(210,175,100,0.3); display: grid; place-items: center; transition: background 0.15s ease;" onmouseover="this.style.background='#111'" onmouseout="this.style.background='rgba(255,255,255,0.6)'">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="#2E2823" aria-hidden="true"><path d="M16.5 3c.3 2.1 1.6 3.6 3.7 3.9v2.5c-1.4.1-2.7-.3-3.9-1v5.9c0 3.3-2.5 5.7-5.6 5.7-2.9 0-5.2-2.2-5.2-5 0-3 2.5-5 5.6-4.7v2.6c-.4-.1-.9-.2-1.3-.2-1.3 0-2.3 1-2.3 2.3 0 1.4 1 2.4 2.3 2.4 1.4 0 2.5-1.1 2.5-2.7V3h4.2z"></path></svg>
+        </a>
+        <a href="https://www.xiaohongshu.com/user/profile/rosiechinese" target="_blank" rel="noopener" title="小红书" style="height: 38px; padding: 0 14px; border-radius: 100px; background: rgba(255,255,255,0.6); border: 1px solid rgba(210,175,100,0.3); display: grid; place-items: center; font-family: 'Newsreader', serif; font-size: 13.5px; color: #2E2823;">小红书</a>
+        <a href="https://www.youtube.com/@rosiechinese" target="_blank" rel="noopener" title="YouTube" style="width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.6); border: 1px solid rgba(210,175,100,0.3); display: grid; place-items: center; transition: background 0.15s ease;" onmouseover="this.style.background='#FF0000';this.querySelector('path').setAttribute('fill','#fff')" onmouseout="this.style.background='rgba(255,255,255,0.6)';this.querySelector('path').setAttribute('fill','#2E2823')">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="#2E2823" aria-hidden="true"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C15.9 4 12 4 12 4h0s-3.9 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.6c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s3.9 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.6c0-1.6-.2-3.3-.2-3.3zM10 14.5v-5l4 2.5-4 2.5z"></path></svg>
+        </a>
+      </div>
+      <p style="font-size: 13.5px; color: #8A7C6B; margin: 0;">© 2026 RosieChinese · Chinese, one conversation at a time.</p>
+    </div>
+  </footer>
+
+  <!-- ===== PROTOTYPE NAV (demo helper) ===== -->
+  <div class="rc-proto" style="position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 60; max-width: calc(100vw - 24px); overflow-x: auto; background: rgba(46,40,35,0.94); backdrop-filter: blur(10px); border-radius: 100px; padding: 6px; display: flex; align-items: center; gap: 2px; box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4);">
+    <sc-for list="{{ protoNav }}" as="p" hint-placeholder-count="8">
+      <button onClick="{{ p.go }}" style="{{ p.style }}">{{ p.label }}</button>
+    </sc-for>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 'home',
+    // scheduling
+    schedCourse: 'package',
+    dayIndex: 2,
+    slot: null,
+    // checkout
+    autoRenew: true,
+    // dashboards
+    dashTab: 'upcoming',
+    teacherTab: 'lessons',
+    activeStudent: 0,
+    activeBio: 0,
+    faqOpen: 0,
+    popup: null,
+    bioEnter: 0,
+  };
+
+  go(screen) {
+    this.setState({ screen });
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0 });
+  }
+
+  componentDidMount() {
+    this.wireFx();
+    try {
+      const saved = localStorage.getItem('rc-warmth');
+      if (saved !== null) this.setState({ warmth: Number(saved) });
+      const savedTint = localStorage.getItem('rc-warmtint');
+      if (savedTint !== null) this.setState({ warmTint: Number(savedTint) });
+    } catch (err) {}
+    this._esc = (e) => { if (e.key === 'Escape' && this.state.popup) this.setState({ popup: null }); };
+    document.addEventListener('keydown', this._esc);
+  }
+  componentWillUnmount() { document.removeEventListener('keydown', this._esc); clearTimeout(this._popT); clearTimeout(this._fxT); if (this._onStoryScroll) window.removeEventListener('scroll', this._onStoryScroll); }
+  componentDidUpdate() { this.wireFx(); }
+  wireFx() {
+    clearTimeout(this._fxT);
+    this._fxT = setTimeout(() => {
+      if (!this._rvIO) this._rvIO = new IntersectionObserver((es) => {
+        es.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const el = en.target;
+          const d = el.getAttribute('data-rvd');
+          if (d) el.style.transitionDelay = (260 + Number(d) * 1.5) + 'ms';
+          el.classList.add('rv-in');
+          this._rvIO.unobserve(el);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+      document.querySelectorAll('[data-reveal]:not(.rv-in)').forEach((el) => {
+        if (el._rvWired) return; el._rvWired = true; this._rvIO.observe(el);
+      });
+      if (!this._bioIO) this._bioIO = new IntersectionObserver((es) => {
+        es.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const i = parseInt(en.target.getAttribute('data-bio'), 10);
+          if (!isNaN(i) && this.state.activeBio !== i) this.setState({ activeBio: i });
+        });
+      }, { rootMargin: '-46% 0px -46% 0px', threshold: 0 });
+      document.querySelectorAll('.rc-rail').forEach((el) => {
+        if (el._ctr) return; el._ctr = true;
+        const c = () => { const d = el.scrollWidth - el.clientWidth; if (d > 4) el.scrollLeft = d / 2; };
+        c(); requestAnimationFrame(c); setTimeout(c, 260);
+      });
+      const story = document.querySelector('[data-story]');
+      if (story && !story._introWired) {
+        story._introWired = true;
+        let raf = 0;
+        const apply = () => {
+          raf = 0;
+          const node = story.querySelector('[data-story-photo]');
+          if (!node) return;
+          const r = story.getBoundingClientRect();
+          const span = Math.max(1, window.innerHeight * 0.9);
+          const p = Math.min(1, Math.max(0, -r.top / span));
+          const eased = 1 - Math.pow(1 - p, 2);
+          node.style.transform = 'translate3d(0,' + ((1 - eased) * 132).toFixed(1) + 'px,0)';
+        };
+        const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+        this._onStoryScroll = onScroll;
+        window.addEventListener('scroll', onScroll, { passive: true });
+        apply();
+      }
+      document.querySelectorAll('[data-bio]').forEach((el) => {
+        if (el._bioWired) return; el._bioWired = true; this._bioIO.observe(el);
+      });
+    }, 80);
+  }
+
+  bioVals() {
+    const a = this.state.activeBio;
+    const layer = (i) => `position:absolute;inset:0;transition:opacity .9s cubic-bezier(.22,1,.36,1);opacity:${a===i?1:0};`;
+    const chapStyle = (i) => `position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1),filter .65s ease;opacity:${a===i?1:0};transform:translateY(${a===i?0:(i<a?-26:26)}px);filter:blur(${a===i?0:3}px);pointer-events:${a===i?'auto':'none'};`;
+    const chaps = [
+        { idx: 0, era: 'Today · 今天', title: 'Tutor, translator, keeper of conversations.', body: 'Hi, I\u2019m Rosie. For nine years I\u2019ve helped adults stop studying Chinese and start speaking it \u2014 professionals, expats, and heritage learners across 14 time zones. My whole method fits in one line: real conversation, from the very first \u4f60\u597d.' },
+        { idx: 1, era: 'Chengdu · 成都', title: 'It started with teahouse chatter.', body: 'I grew up in Chengdu on teahouse gossip and spicy \u4e32\u4e32 \u2014 switching between Sichuan dialect at the market and standard Mandarin at school. Language was never homework in our house. It was how you got the good stories.' },
+        { idx: 2, era: 'California · 加州', title: 'Then I became the language learner.', body: 'University in California flipped the table: suddenly I was the one fumbling words and celebrating tiny wins. Living between two languages taught me exactly what learners need \u2014 and what textbooks keep getting wrong.' },
+        { idx: 3, era: '2017 – now', title: 'Nine years, 320 learners, one method.', body: 'Since 2017 I\u2019ve taught over 320 students and earned my CTCSOL certification \u2014 and refined one stubborn belief: you don\u2019t need 2,000 characters before you can say hello. You need a patient conversation partner who won\u2019t let you stop talking.' },
+    ];
+    return {
+      bioChapters: chaps.map((c, i) => ({ ...c, idx: i, style: chapStyle(i), showCreds: i === 0 })),
+      credsInline: ['CTCSOL certified', 'MA Applied Linguistics', '\u666e\u901a\u8bdd\u4e00\u7ea7\u7532\u7b49'],
+      credentials: [
+        { title: 'CTCSOL certified', sub: '国际中文教师证 · Hanban / CLEC', year: '2017' },
+        { title: 'MA Applied Linguistics', sub: 'Beijing Normal University', year: '2016' },
+        { title: 'Putonghua Level 1-A', sub: '普通话一级甲等 · top pronunciation band', year: '2015' },
+        { title: 'Accredited HSK examiner', sub: 'Levels 1–6 test prep and mock exams', year: '2019' },
+        { title: 'TCFL teaching diploma', sub: 'Teaching Chinese as a Foreign Language', year: '2016' },
+        { title: '320+ learners taught', sub: 'Professionals, expats, heritage speakers', year: '2017–now' },
+      ],
+      bioL0: layer(0), bioL1: layer(1), bioL2: layer(2), bioL3: layer(3),
+      bioCaption: ['Rosie · today', 'Chengdu, where it started', 'California, university years', 'With students, 2017 – now'][a] || 'Rosie · today',
+    };
+  }
+
+  faqVals() {
+    const list = [
+      { q: 'Where do lessons happen?', a: 'On Zoom or Google Meet \u2014 your choice. Every lesson comes with shared notes, and package students get the recording afterwards.' },
+      { q: 'What if I need to reschedule?', a: 'Life happens. Move any lesson free of charge up to 12 hours before it starts, right from your dashboard.' },
+      { q: 'Do package lessons expire?', a: 'Never. Your 16 lessons stay yours until you use them \u2014 pause for a holiday or a busy quarter and pick up where you left off.' },
+      { q: 'What\u2019s the refund policy?', a: 'The trial is fully refundable \u2014 if it\u2019s not a fit, say so within 24 hours and you pay nothing. Unused package lessons are refundable any time.' },
+      { q: 'I\u2019m a complete beginner. Is that okay?', a: 'It\u2019s my favourite starting point. You\u2019ll speak real, usable Chinese in your very first lesson \u2014 tones and pinyin included, fear not included.' },
+      { q: 'How much homework should I expect?', a: 'About 20 relaxed minutes between lessons \u2014 a voice note, a few phrases to try, or a show clip to watch. Enough to keep momentum, never busywork.' },
+    ];
+    const open = this.state.faqOpen;
+    return { faqs: list.map((f, i) => ({
+      q: f.q, a: f.a,
+      toggle: () => this.setState({ faqOpen: open === i ? -1 : i }),
+      chev: `flex:none;width:26px;height:26px;border-radius:50%;background:${open===i?'#C2674F':'#EBDFD2'};color:${open===i?'#FBF4EE':'#9A6A52'};display:grid;place-items:center;font-size:15px;transition:transform .45s cubic-bezier(.22,1,.36,1), background .3s ease;transform:rotate(${open===i?45:0}deg);`,
+      bodyStyle: `display:grid;grid-template-rows:${open===i?'1fr':'0fr'};transition:grid-template-rows .5s cubic-bezier(.22,1,.36,1);`,
+    })) };
+  }
+
+  warmVals() {
+    const w = this.state.warmth ?? 0;
+    const kelvin = Math.round(6500 - (6500 - 2400) * (w / 100));
+    // Tanner Helland blackbody approximation -> multiply white point
+    const t = kelvin / 100;
+    let r, g, b;
+    if (t <= 66) { r = 255; } else { r = 329.7 * Math.pow(t - 60, -0.1332); }
+    if (t <= 66) { g = 99.47 * Math.log(t) - 161.12; } else { g = 288.12 * Math.pow(t - 60, -0.0755); }
+    if (t >= 66) { b = 255; } else if (t <= 19) { b = 0; } else { b = 138.52 * Math.log(t - 10) - 305.04; }
+    const cl = (x) => Math.min(255, Math.max(0, Math.round(x)));
+    // tint bias: +ve pushes green up (yellower), -ve pulls it down (redder/oranger)
+    const tint = this.state.warmTint ?? 0;
+    const gGap = 255 - g;
+    g = g + gGap * (tint / 100) * (w / 100) * 1.6;
+    if (tint < 0) b = b * (1 + tint / 160);
+    return {
+      warmth: w,
+      warmKelvin: kelvin + 'K',
+      warmLabel: w === 0 ? 'off' : w + ' / 100',
+      warmTint: tint,
+      warmTintLabel: tint === 0 ? 'neutral' : (tint > 0 ? '+' + tint + ' yellow' : tint + ' red'),
+      setWarmth: (e) => {
+        const v = Number(e.target.value);
+        this.setState({ warmth: v });
+        try { localStorage.setItem('rc-warmth', String(v)); } catch (err) {}
+      },
+      setWarmTint: (e) => {
+        const v = Number(e.target.value);
+        this.setState({ warmTint: v });
+        try { localStorage.setItem('rc-warmtint', String(v)); } catch (err) {}
+      },
+      warmOverlay: `position:fixed;inset:0;z-index:120;pointer-events:none;mix-blend-mode:multiply;background:rgb(${cl(r)},${cl(g)},${cl(b)});opacity:${w === 0 ? 0 : 1};transition:background .18s linear;`,
+      warmOpen: !!this.state.warmOpen,
+      toggleWarm: () => this.setState({ warmOpen: !this.state.warmOpen }),
+      warmBtn: `position:fixed;z-index:131;bottom:20px;right:20px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.16);background:rgba(28,24,20,${this.state.warmOpen ? 0.96 : 0.82});backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 14px 30px -14px rgba(0,0,0,0.6);cursor:pointer;display:grid;place-items:center;font-family:inherit;font-size:17px;line-height:1;color:${w > 0 ? '#E3C25F' : '#C8BCA9'};opacity:${this.state.popup ? 0 : 1};pointer-events:${this.state.popup ? 'none' : 'auto'};transition:opacity .3s ease,background .25s ease,color .25s ease;`,
+      warmPanel: `position:fixed;z-index:130;bottom:76px;right:20px;width:248px;background:rgba(28,24,20,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:16px 18px;box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);font-family:'Hanken Grotesk',system-ui,sans-serif;transform-origin:bottom right;opacity:${(this.state.warmOpen && !this.state.popup) ? 1 : 0};transform:scale(${(this.state.warmOpen && !this.state.popup) ? 1 : 0.94}) translateY(${(this.state.warmOpen && !this.state.popup) ? 0 : 8}px);pointer-events:${(this.state.warmOpen && !this.state.popup) ? 'auto' : 'none'};transition:opacity .28s ease,transform .34s cubic-bezier(.22,1,.36,1);`,
+    };
+  }
+
+  openQuote(t) { clearTimeout(this._popT); this.setState({ popup: { kind: 'quote', quote: t.quote, name: t.name, role: t.role, tint: t.tint } }); }
+  openVideo(v) { clearTimeout(this._popT); this.setState({ popup: { kind: 'video', name: v.name, tag: v.tag, g: v.g, ratio: v.ratio || '9/16' } }); }
+
+  popupVals() {
+    const p = this.state.popup || this._lastPopup;
+    if (this.state.popup) this._lastPopup = this.state.popup;
+    const on = !!this.state.popup;
+    const wide = !!p && p.ratio && p.ratio !== '9/16';
+    return {
+      closePopup: () => {
+        if (!this.state.popup) return;
+        this.setState({ popup: null });
+        clearTimeout(this._popT);
+        this._popT = setTimeout(() => { this._lastPopup = null; this.forceUpdate(); }, 560);
+      },
+      openIntro: () => this.openVideo({ name: 'Rosie, in her own words', tag: 'Self-introduction \u00b7 \u81ea\u6211\u4ecb\u7ecd \u00b7 2:04', g: 'linear-gradient(150deg, #EBDCC0, #DCC6A1 55%, #CDB28C)', ratio: '4/3' }),
+      popHasQuote: !!p && p.kind === 'quote',
+      popHasVideo: !!p && p.kind === 'video',
+      popQuote: p ? (p.quote || '') : '',
+      popName: p ? (p.name || '') : '',
+      popRole: p ? (p.role || '') : '',
+      popTag: p ? (p.tag || '') : '',
+      popTint: p ? (p.tint || '#D9B79F') : '#D9B79F',
+      popG: p ? (p.g || '#E2CFAE') : '#E2CFAE',
+      popRatio: p ? (p.ratio || '9/16') : '9/16',
+      popOverlay: `position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:26px;background:rgba(38,31,24,${on?0.46:0});backdrop-filter:blur(${on?12:0}px);-webkit-backdrop-filter:blur(${on?12:0}px);transition:opacity .42s cubic-bezier(.22,1,.36,1),background .42s ease,backdrop-filter .42s ease;opacity:${on?1:0};pointer-events:${on?'auto':'none'};`,
+      popCard: `position:relative;width:100%;max-width:${wide?'min(720px, 132vh)':(p&&p.kind==='video'?'min(400px, calc((88vh - 116px) * 0.5625))':'600px')};max-height:88vh;overflow:hidden;background:${on?'#FBF7F1':'transparent'};border:1px solid ${on?'rgba(255,255,255,0.85)':'transparent'};border-radius:26px;box-shadow:${on?'0 50px 100px -40px rgba(60,42,26,0.6)':'none'};transform:scale(${on?1:0.92}) translateY(${on?0:14}px);opacity:${on?1:0};transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .42s cubic-bezier(.4,0,1,1);`,
+    };
+  }
+
+  mediaVals() {
+    const t = this.testimonialData;
+    const q = (x) => ({ ...x, open: () => this.openQuote(x) });
+    const v = (x) => ({ ...x, open: () => this.openVideo(x) });
+    const studentVids = [
+      { name: 'James', tag: 'Lesson 12 · Shanghai', g: 'linear-gradient(165deg, #E2CFAE, #C9AC7F)' },
+      { name: 'Sarah', tag: 'HSK 5 · Berlin', g: 'linear-gradient(165deg, #D8DCC6, #AEB894)' },
+      { name: 'Tom', tag: '8 weeks · Shenzhen', g: 'linear-gradient(165deg, #D9E0E4, #A9BCC6)' },
+      { name: 'Nadia', tag: 'Heritage · London', g: 'linear-gradient(165deg, #E4D3D9, #C4A3B4)' },
+      { name: 'Priya', tag: 'Client calls · Taipei', g: 'linear-gradient(165deg, #E7D7C0, #C9A98C)' },
+      { name: 'Robert', tag: 'Bedtime stories · 61', g: 'linear-gradient(165deg, #DCD6E2, #ADA3BE)' },
+      { name: 'Emma', tag: 'HSK 4 · Dublin', g: 'linear-gradient(165deg, #D5E0D6, #A2B7A6)' },
+      { name: 'Marco', tag: 'Football debates · Milan', g: 'linear-gradient(165deg, #E9D6C6, #C79E86)' },
+    ];
+    const rosieVids = [
+      { name: 'Tones without tears', tag: '3 drills, 60 seconds', platform: 'TIKTOK', g: 'linear-gradient(165deg, #EFE0C2, #D4B183)' },
+      { name: 'Order food like a local', tag: 'Chengdu street food', platform: '小红书', g: 'linear-gradient(165deg, #EDD4CE, #CE9C93)' },
+      { name: '5 words that fix your grammar', tag: 'Beginner friendly', platform: 'YOUTUBE', g: 'linear-gradient(165deg, #DEE2CE, #A8B892)' },
+      { name: 'Why 了 confuses everyone', tag: 'Grammar, 90 seconds', platform: 'TIKTOK', g: 'linear-gradient(165deg, #DCE1E6, #A5B6C4)' },
+      { name: 'Small talk that never fails', tag: 'Work Chinese', platform: 'YOUTUBE', g: 'linear-gradient(165deg, #E9DCC8, #C3A57F)' },
+      { name: 'Measure words, finally clear', tag: '个 只 张 本 杯', platform: '小红书', g: 'linear-gradient(165deg, #E6D8E0, #B69BB0)' },
+      { name: 'Sound less like a textbook', tag: '6 filler words locals use', platform: 'TIKTOK', g: 'linear-gradient(165deg, #E3DFC8, #ADAA85)' },
+      { name: 'Taxi, metro, delivery apps', tag: 'Survival Chinese', platform: 'YOUTUBE', g: 'linear-gradient(165deg, #D8E1DC, #9DB5AC)' },
+      { name: 'The 4 tones, in 40 seconds', tag: 'Absolute beginners', platform: 'TIKTOK', g: 'linear-gradient(165deg, #F0DEC4, #CFA97A)' },
+      { name: 'Chinese my students overuse', tag: 'Stop saying 很好', platform: '小红书', g: 'linear-gradient(165deg, #EBD6D2, #C69A93)' },
+    ];
+    const realVids = [
+      { name: 'First lesson, absolute beginner', tag: 'Meeting Anna — pinyin, four tones, and her first full sentence by minute thirty.', level: 'Beginner', len: '8:12 clip', g: 'linear-gradient(150deg, #EFE1C6, #D3B285)' },
+      { name: 'Correcting tones mid-conversation', tag: 'How I fix pronunciation without stopping the flow — the echo technique in practice.', level: 'Method', len: '6:40 clip', g: 'linear-gradient(150deg, #E3DCC4, #A9AC84)' },
+      { name: 'Business Mandarin roleplay', tag: 'James rehearses a client call — industry vocabulary, hedging, and polite pushback.', level: 'Intermediate', len: '9:05 clip', g: 'linear-gradient(150deg, #DEE3E7, #A3B6C3)' },
+      { name: 'HSK 5 speaking prep', tag: 'Sarah works through a timed exam prompt, then we rebuild the answer together.', level: 'Advanced', len: '7:28 clip', g: 'linear-gradient(150deg, #E7D9DE, #BC9DAE)' },
+    ];
+    const storyVids = studentVids.slice(0, 4).map((x) => ({ ...x, isVideo: true }));
+    const quotes = t.map((x) => ({ ...x, isQuote: true }));
+    const mixed = [];
+    let vi = 0, qi = 0;
+    while (qi < quotes.length || vi < storyVids.length) {
+      for (let k = 0; k < 3 && qi < quotes.length; k++) mixed.push(quotes[qi++]);
+      if (vi < storyVids.length) mixed.push(storyVids[vi++]);
+    }
+    return {
+      marqueeCards: [...t, ...t].map(q),
+      studentVideos: studentVids.map(v),
+      rosieVideos: rosieVids.map(v),
+      realLessons: realVids.map((x) => ({ ...x, open: () => this.openVideo({ ...x, ratio: '16/9' }) })),
+      storyItems: mixed.map((x, i) => {
+        const base = x.isVideo ? v(x) : q(x);
+        return { ...base, delay: (i % 3) * 110,
+          cardStyle: `break-inside:avoid;margin-bottom:22px;cursor:pointer;overflow:hidden;background:#FBF7F1;border:1px solid #EAE0D2;border-radius:16px;` };
+      }),
+      socialCards: [
+        { name: 'TikTok', handle: '@rosiechinese', count: '62.4k followers', blurb: 'Quick drills and pronunciation fixes you can copy on the spot.', cta: 'Follow \u2192', href: 'https://www.tiktok.com/@rosiechinese', bg: '#111', shadow: 'rgba(0,0,0,0.5)', glow: 'radial-gradient(circle, rgba(46,40,35,0.12), rgba(46,40,35,0) 66%)', isTikTok: true, isRed: false, isYouTube: false },
+        { name: '小红书 · RED', handle: 'Rosie 中文课', count: '48.1k followers', blurb: 'Everyday life in Chinese — food, travel, and the words locals use.', cta: '\u5173\u6ce8 \u2192', href: 'https://www.xiaohongshu.com/user/profile/rosiechinese', bg: '#FF2442', shadow: 'rgba(255,36,66,0.45)', glow: 'radial-gradient(circle, rgba(255,36,66,0.14), rgba(255,36,66,0) 66%)', isTikTok: false, isRed: true, isYouTube: false },
+        { name: 'YouTube', handle: '@rosiechinese', count: '31.7k subscribers', blurb: 'Longer lessons: grammar explained slowly, with real examples.', cta: 'Subscribe \u2192', href: 'https://www.youtube.com/@rosiechinese', bg: '#FF0000', shadow: 'rgba(255,0,0,0.45)', glow: 'radial-gradient(circle, rgba(255,0,0,0.12), rgba(255,0,0,0) 66%)', isTikTok: false, isRed: false, isYouTube: true },
+      ],
+    };
+  }
+
+  // ---------- static data ----------
+  get courseData() {
+    return [
+      { id: 'trial', name: 'Trial Lesson', zh: '体验课', price: '$35', unit: '50 min · one-time', per: '', tag: '', blurb: 'A relaxed first session to meet Rosie, talk through your goals, and get an honest read on your level.', features: ['50-minute live 1:1 session', 'Level assessment + written feedback', 'Personalised learning plan', 'Not a fit? Full refund \u2014 no questions asked'] },
+      { id: 'single', name: 'One Lesson', zh: '单节课', price: '$69', unit: '50 min · pay as you go', per: '', tag: '', blurb: 'Drop in whenever you like. Perfect for a trip coming up, an HSK push, or just keeping your Chinese warm.', features: ['50-minute live 1:1 session', 'Full topic flexibility', 'Lesson notes + recording', 'Book any open slot'] },
+      { id: 'package', name: 'Lesson Package', zh: '课包', price: '$960', unit: '16 lessons · $60 each', per: '$60 / lesson', tag: 'Most popular · 主推', blurb: 'The real path to fluency. Sixteen lessons at the best per-hour rate, with progress tracking and priority booking.', features: ['16 × 50-minute lessons', 'Save $144 vs. single lessons', 'Progress tracking + homework', 'Priority slot access', 'Auto-renews so you never lose momentum'] },
+    ];
+  }
+
+  get stepData() {
+    return [
+      { num: '01', title: 'Book a trial', body: 'Pick a time that works in your zone. Rosie syncs her live calendar, so every slot you see is genuinely open.' },
+      { num: '02', title: 'Meet & map a plan', body: 'In your first 50 minutes we find your level and build a plan around why you want Chinese — work, travel, family, or HSK.' },
+      { num: '03', title: 'Show up & speak', body: 'Lessons are real conversation, not flashcards. Track your progress and watch the package lessons add up.' },
+    ];
+  }
+
+  get testimonialData() {
+    return [
+      { quote: 'I went from knowing zero characters to ordering dinner and joking with my in-laws in Shanghai. Rosie never made me feel silly about my tones — she just kept the conversation going.', name: 'James M.', role: 'Moved to Shanghai · 8 months', tint: '#D9B79F' },
+      { quote: 'HSK 3 to HSK 5 in a single package. The homework was tough but the lessons were the best part of my week.', name: 'Sarah K.', role: 'HSK 5 · grad student', tint: '#A9B79A' },
+      { quote: 'My son actually looks forward to Chinese now. Rosie talks about the games he loves, so he forgets he\u2019s studying.', name: 'Mrs. Alvarez', role: 'Parent · teen learner', tint: '#C9A6C2' },
+      { quote: 'I needed survival Mandarin fast for a Shenzhen posting. Eight weeks later I ran my first team meeting in Chinese.', name: 'Tom B.', role: 'Relocated for work', tint: '#E2C98A' },
+      { quote: 'The package format kept me honest. Seeing "10 of 16" on my dashboard made me book the next one every single time.', name: 'Nadia P.', role: 'Heritage learner · 14 months', tint: '#9FB6C2' },
+      { quote: 'Warm, patient, and seriously prepared. She remembered a story I told three lessons ago and built a whole topic around it.', name: 'Daniel O.', role: 'Conversation · 6 months', tint: '#D9A9A0' },
+      { quote: 'Three trips to Taipei later, my clients think I studied abroad. I didn\u2019t \u2014 I had Tuesday nights with Rosie.', name: 'Priya S.', role: 'Consultant · 11 months', tint: '#C9B27F' },
+      { quote: 'I\u2019m 61 and thought it was too late. Forty lessons in, I read my granddaughter her bedtime story in Chinese.', name: 'Robert H.', role: 'Retired · learning for family', tint: '#B5A8C9' },
+      { quote: 'Every teacher before her let me hide behind grammar drills. Rosie wouldn\u2019t. That\u2019s why it worked.', name: 'Emma L.', role: 'HSK 4 · 10 months', tint: '#A9C2B8' },
+      { quote: 'She noticed I learn best by arguing, so now we debate \u2014 in Chinese, about football. I forget I\u2019m in a lesson.', name: 'Marco V.', role: 'Conversation · 7 months', tint: '#D9A9A0' },
+      { quote: 'The level report from my trial was more useful than a year of app streaks. I knew exactly what to fix first.', name: 'Aisha B.', role: 'Started from HSK 2', tint: '#C2A98F' },
+      { quote: 'Moved for love, stayed for the language. My mother-in-law and I finally have our own jokes.', name: 'Claire D.', role: 'Living in Hangzhou · 1 year', tint: '#9FB6C2' },
+      { quote: 'I had tried three tutors and two apps before Rosie and always stalled at the same place — I could read and recognise plenty, but the second someone spoke to me my mind went blank and I reverted to English. What changed with Rosie is that she simply would not let the silence happen. She waits, she gives me the first two words, and somehow I finish the sentence myself. Eight months in I ran an entire client kickoff in Mandarin. My colleagues in the Shanghai office asked which university I had studied at.', name: 'Alexander K.', role: 'Finance · 8 months', tint: '#C2A98F' },
+      { quote: 'My daughter married into a Chinese family and I decided at 58 that I refused to be the silent grandmother at the table. Rosie built the whole first month around exactly that dinner table — the food words, the polite phrases, the questions relatives ask, even how to deflect the ones about my health. The first time I made my son-in-law’s mother laugh at something I said in Chinese, I cried in the car afterwards. That is not a language lesson, that is a family reunited.', name: 'Margaret W.', role: 'Family Chinese · 14 months', tint: '#B5A8C9' },
+      { quote: 'Rosie diagnosed in twenty minutes what a year of self-study had missed: I was memorising vocabulary but had no grammar spine to hang it on, so every sentence collapsed. She rebuilt the foundation without ever making me feel like I had wasted that year, and folded my existing vocabulary into the new structure so it finally became usable.', name: 'Hiroshi T.', role: 'HSK 4 → 5 · 9 months', tint: '#A9C2B8' },
+      { quote: 'Tuesday nights with Rosie are the only hour of my week I never reschedule.', name: 'Lena F.', role: 'Conversation · 5 months', tint: '#D9A9A0' },
+      { quote: 'She sends a voice note after every lesson with the two things I should practise. Small thing, enormous difference.', name: 'Omar A.', role: 'Beginner · 4 months', tint: '#C9B27F' },
+      { quote: 'I moved to Shenzhen for work with roughly forty words of Chinese and a lot of misplaced confidence. Rosie got me from surviving to actually enjoying the place — ordering properly, arguing with my landlord, making jokes badly. What I did not expect was how much of the lesson time would be about culture rather than grammar: why a question sounds rude phrased one way and warm phrased another. That is the part no app taught me.', name: 'Ben C.', role: 'Living in Shenzhen · 1 year', tint: '#9FB6C2' },
+    ];
+  }
+
+  get weekDays() {
+    const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const nums = ['23','24','25','26','27','28','29'];
+    const counts = [4, 6, 5, 3, 6, 2, 0];
+    return names.map((n,i) => ({ name: n, num: nums[i], count: counts[i] }));
+  }
+
+  get slotsForDay() {
+    const all = {
+      0: ['9:00 AM','11:00 AM','2:00 PM','7:00 PM'],
+      1: ['8:00 AM','9:00 AM','10:00 AM','1:00 PM','6:00 PM','7:00 PM'],
+      2: ['9:00 AM','10:00 AM','12:00 PM','5:00 PM','8:00 PM'],
+      3: ['10:00 AM','3:00 PM','8:00 PM'],
+      4: ['8:00 AM','9:00 AM','11:00 AM','2:00 PM','6:00 PM','7:00 PM'],
+      5: ['10:00 AM','11:00 AM'],
+      6: [],
+    };
+    return all[this.state.dayIndex] || [];
+  }
+
+  get studentData() {
+    return [
+      { name: 'James Miller', initials: 'JM', tint: '#D9B79F', plan: 'Lesson Package', done: 11, total: 16, next: 'Tomorrow · 7:00 PM', status: 'On track', flag: false, focus: 'Business Mandarin & meetings' },
+      { name: 'Sarah Klein', initials: 'SK', tint: '#A9B79A', plan: 'Lesson Package', done: 6, total: 16, next: 'Thu · 10:00 AM', status: 'On track', flag: false, focus: 'HSK 5 speaking prep' },
+      { name: 'Tom Becker', initials: 'TB', tint: '#9FB6C2', plan: 'Lesson Package', done: 15, total: 16, next: 'Renews in 1 lesson', status: 'Renewal soon', flag: true, focus: 'Survival Chinese for Shenzhen' },
+      { name: 'Nadia Petrova', initials: 'NP', tint: '#C9A6C2', plan: 'Single lessons', done: 3, total: null, next: 'Not scheduled', status: 'Needs booking', flag: true, focus: 'Heritage / family conversation' },
+      { name: 'Lucas Alvarez', initials: 'LA', tint: '#E2C98A', plan: 'Lesson Package', done: 2, total: 16, next: 'Fri · 6:00 PM', status: 'New', flag: false, focus: 'Tones & pronunciation' },
+    ];
+  }
+
+  get upcomingLessons() {
+    return [
+      { day: 'Today', time: '7:00 PM', name: 'James Miller', tint: '#D9B79F', type: 'Package · Lesson 12 of 16', topic: 'Ordering & restaurant Chinese' },
+      { day: 'Tomorrow', time: '10:00 AM', name: 'Sarah Klein', tint: '#A9B79A', type: 'Package · Lesson 7 of 16', topic: 'HSK 5 picture description' },
+      { day: 'Tomorrow', time: '6:00 PM', name: 'Lucas Alvarez', tint: '#E2C98A', type: 'Package · Lesson 3 of 16', topic: 'Tones: 3rd-tone sandhi' },
+      { day: 'Thu Jun 25', time: '3:00 PM', name: 'Tom Becker', tint: '#9FB6C2', type: 'Package · Lesson 16 of 16', topic: 'Office small talk & WeChat' },
+    ];
+  }
+
+  get earnings() {
+    return {
+      month: '$4,820',
+      delta: '+18%',
+      lessons: 71,
+      pending: '$960',
+      bars: [62, 48, 70, 55, 80, 67, 92, 74, 88, 70, 96, 82],
+      months: ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'],
+      rows: [
+        { label: 'Lesson Package renewals', count: '5 packages', amount: '$4,800' },
+        { label: 'Single lessons', count: '11 lessons', amount: '$759' },
+        { label: 'Trial lessons', count: '8 trials', amount: '$280' },
+        { label: 'Platform fee', count: '\u2014', amount: '\u2212$1,019' },
+      ],
+    };
+  }
+
+  // ---------- derived render values ----------
+  renderVals() {
+    const s = this.state.screen;
+    const go = (x) => () => this.go(x);
+
+    const navItems = [
+      { key: 'home', label: 'Home' },
+      { key: 'about', label: 'About' },
+      { key: 'courses', label: 'Courses' },
+      { key: 'testimonials', label: 'Stories' },
+      { key: 'contact', label: 'Contact' },
+    ];
+    const navLinks = navItems.map(n => ({
+      label: n.label,
+      go: go(n.key),
+      style: `background:none;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;padding:9px 14px;border-radius:100px;color:${s===n.key?'#2E2823':'#6B6258'};${s===n.key?'background:#E6DACA;':''}`,
+    }));
+
+    const courses = this.courseData.map(c => ({
+      name: c.name, zh: c.zh, price: c.price, unit: c.unit,
+      go: () => { this.setState({ schedCourse: c.id }); this.go('courses'); },
+      miniStyle: `display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-radius:14px;cursor:pointer;font-family:inherit;text-align:left;border:1px solid ${c.id==='package'?'#C2674F':'rgba(255,255,255,0.12)'};background:${c.id==='package'?'#C2674F':'rgba(255,255,255,0.05)'};`,
+      miniInk: c.id==='package' ? '#FBF4EE' : '#F4EEE5',
+      miniSub: c.id==='package' ? '#F4D9CC' : '#B7AC9C',
+    }));
+
+    const protoItems = [
+      ['home','Home'],['about','About'],['courses','Courses'],['schedule','Booking'],
+      ['checkout','Checkout'],['dashboard','Student'],['testimonials','Stories'],['contact','Contact'],['teacher','Teacher portal'],
+    ];
+    const protoNav = protoItems.map(([k,l]) => ({
+      label: l, go: go(k),
+      style: `background:${s===k?'#C2674F':'transparent'};color:${s===k?'#FBF4EE':'#C9BEAD'};border:none;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:100px;white-space:nowrap;`,
+    }));
+
+    return {
+      isHome: s==='home', isAbout: s==='about', isCourses: s==='courses',
+      isSchedule: s==='schedule', isCheckout: s==='checkout', isDashboard: s==='dashboard',
+      isTestimonials: s==='testimonials', isTeacher: s==='teacher', isContact: s==='contact',
+      goHome: go('home'), goAbout: go('about'), goCourses: go('courses'),
+      goSchedule: go('schedule'), goCheckout: go('checkout'), goDashboard: go('dashboard'),
+      goTestimonials: go('testimonials'), goTeacher: go('teacher'), goContact: go('contact'),
+      goTrial: () => { this.setState({ schedCourse: 'trial' }); this.go('schedule'); },
+      navLinks, courses, steps: this.stepData, protoNav,
+      philosophy: [
+        { n: '01', title: 'You speak from minute one', body: 'Lessons are 80% you talking — even in week one, even when it comes out in fragments. I correct tones and grammar in the moment with a quick echo of the right version, so your flow never breaks, then send written notes afterwards so nothing is lost. Most students are holding a real, if wobbly, conversation by lesson three.' },
+        { n: '02', title: 'Built around your actual life', body: 'Before your first lesson I ask what you need Chinese for: the standup meeting, the in-laws in Hangzhou, the C-drama you watch without subtitles someday. Then we build from that material — your industry’s vocabulary, your neighbourhood, your group chat — because language you have a use for is language you keep.' },
+        { n: '03', title: 'Correction without embarrassment', body: 'Adults quit Chinese because being wrong out loud feels humiliating, not because tones are hard. So I never let a mistake become a moment. I mirror the correct form, we move on, and the same pattern quietly returns two lessons later until it sticks. You get precise feedback and keep your dignity.' },
+      ],
+      aboutStats: [
+        { n: '9', label: 'years teaching Mandarin' },
+        { n: '320+', label: 'learners across 14 time zones' },
+        { n: '4.96', label: 'average lesson rating' },
+        { n: 'CTCSOL', label: '国际中文教师证 · certified' },
+      ],
+      courseCards: this.courseData.map(c => {
+        const hot = c.id === 'package';
+        return {
+          name: c.name, zh: c.zh, price: c.price, per: c.per, unit: c.unit, blurb: c.blurb, tag: c.tag, features: c.features, off: hot ? '13% OFF' : '',
+          book: () => { this.setState({ schedCourse: c.id }); this.go('schedule'); },
+          cta: c.id === 'trial' ? 'Book trial lesson' : (hot ? 'Get the package' : 'Book a lesson'),
+          cardStyle: `border-radius:20px;padding:32px;transition:transform .55s cubic-bezier(.22,1,.36,1),box-shadow .55s cubic-bezier(.22,1,.36,1);${hot ? 'background:#2E2823;border:1px solid #2E2823;box-shadow:0 28px 56px -30px rgba(80,55,40,0.5);' : 'background:#FBF7F1;border:1px solid #EAE0D2;'}`,
+          ink: hot ? '#F4EEE5' : '#2E2823',
+          sub: hot ? '#B7AC9C' : '#6B6258',
+          featInk: hot ? '#D9CFBF' : '#4A4138',
+          line: hot ? 'rgba(255,255,255,0.12)' : '#EAE0D2',
+          dot: hot ? '#C2674F' : '#E6DACA',
+          dotInk: hot ? '#FBF4EE' : '#9A6A52',
+          btnStyle: `width:100%;border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:700;padding:14px;border-radius:100px;${hot ? 'background:#C2674F;color:#FBF4EE;' : 'background:#2E2823;color:#F7F1E8;'}`,
+        };
+      }),
+      testimonials: this.testimonialData.map((t, i) => ({ ...t, delay: (i % 3) * 110 })),
+      ...this.mediaVals(),
+      ...this.popupVals(),
+      ...this.warmVals(),
+      ...this.bioVals(),
+      ...this.faqVals(),
+      ...this.schedVals(),
+      ...this.checkoutVals(),
+      ...this.dashVals(),
+      ...this.teacherVals(),
+    };
+  }
+
+  dashVals() {
+    const tab = this.state.dashTab;
+    const items = [
+      { key: 'upcoming', label: 'Overview', icon: '◐' },
+      { key: 'lessons', label: 'Lessons', icon: '✎' },
+      { key: 'billing', label: 'Billing', icon: '◇' },
+      { key: 'messages', label: 'Messages', icon: '✉' },
+    ];
+    const dashNav = items.map(n => ({
+      label: n.label, icon: n.icon,
+      go: () => this.setState({ dashTab: n.key }),
+      style: `display:flex;align-items:center;gap:11px;width:100%;text-align:left;font-family:inherit;font-size:14px;font-weight:600;padding:11px 13px;border-radius:10px;cursor:pointer;border:none;`+
+        (tab===n.key ? 'background:#EBDFD2;color:#9A6A52;' : 'background:none;color:#6B6258;'),
+    }));
+    const on = this.state.autoRenew;
+    return {
+      dashNav,
+      dashOverview: tab==='upcoming', dashLessons: tab==='lessons', dashBilling: tab==='billing', dashMessages: tab==='messages',
+      studentUpcoming: [
+        { day: 'Today', time: '7PM', topic: 'Ordering food & street snacks', sub: 'Lesson 12 of 16 · 50 min' },
+        { day: 'Mon', time: '7PM', topic: 'WeChat & texting in Chinese', sub: 'Lesson 13 of 16 · 50 min' },
+      ],
+      studentHistory: [
+        { mark: '✓', topic: 'Small talk & 你好', date: 'Jun 16 · Lesson 11', status: 'Completed', dot: '#E7ECDF', dotInk: '#5E6E4E', statusInk: '#6E7F5E' },
+        { mark: '✓', topic: 'Numbers, money & bargaining', date: 'Jun 9 · Lesson 10', status: 'Completed', dot: '#E7ECDF', dotInk: '#5E6E4E', statusInk: '#6E7F5E' },
+        { mark: '↻', topic: 'Directions & taxis', date: 'Jun 2 · Lesson 9', status: 'Rescheduled', dot: '#EBDFD2', dotInk: '#9A6A52', statusInk: '#9A6A52' },
+        { mark: '✓', topic: 'Past actions with 了', date: 'May 26 · Lesson 8', status: 'Completed', dot: '#E7ECDF', dotInk: '#5E6E4E', statusInk: '#6E7F5E' },
+        { mark: '✓', topic: 'Family & relationships', date: 'May 19 · Lesson 7', status: 'Completed', dot: '#E7ECDF', dotInk: '#5E6E4E', statusInk: '#6E7F5E' },
+      ],
+      billRenewStyle: `flex:none;width:46px;height:27px;border-radius:100px;border:none;cursor:pointer;background:${on?'#C2674F':'#D8CDBD'};display:flex;align-items:center;padding:3px;${on?'justify-content:flex-end;':'justify-content:flex-start;'}`,
+      billKnobStyle: 'width:21px;height:21px;border-radius:50%;background:#FFFFFF;display:block;',
+      studentPayments: [
+        { label: 'Lesson Package (16)', date: 'Apr 2, 2026', method: 'Visa ··42', amount: '$960.00', status: 'Paid' },
+        { label: 'One Lesson', date: 'Mar 18, 2026', method: 'Visa ··42', amount: '$69.00', status: 'Paid' },
+        { label: 'Trial Lesson', date: 'Mar 4, 2026', method: 'Visa ··42', amount: '$35.00', status: 'Paid' },
+      ],
+      studentChat: this.chatVals([
+        { who: 'rosie', text: 'Great work today, James! For next time, try the three phrases I sent. 加油!', time: '4:12 PM' },
+        { who: 'me', text: 'Thank you Rosie! I used 不好意思 in a real shop today 😄', time: '5:48 PM' },
+        { who: 'rosie', text: 'That\u2019s exactly it. We\u2019ll polish your restaurant ordering on Monday.', time: '6:02 PM' },
+        { who: 'me', text: 'Perfect, see you then!', time: '6:05 PM' },
+      ]),
+    };
+  }
+
+  teacherVals() {
+    const tab = this.state.teacherTab;
+    const items = [
+      { key: 'lessons', label: 'Lessons', icon: '◷' },
+      { key: 'students', label: 'Students', icon: '◎' },
+      { key: 'earnings', label: 'Earnings', icon: '◇' },
+      { key: 'messages', label: 'Messages', icon: '✉' },
+    ];
+    const teacherNav = items.map(n => ({
+      label: n.label, icon: n.icon,
+      go: () => this.setState({ teacherTab: n.key }),
+      style: `display:flex;align-items:center;gap:11px;width:100%;text-align:left;font-family:inherit;font-size:14px;font-weight:600;padding:11px 13px;border-radius:10px;cursor:pointer;border:none;`+
+        (tab===n.key ? 'background:#C2674F;color:#FBF4EE;' : 'background:rgba(255,255,255,0.04);color:#C9BEAD;'),
+    }));
+
+    const students = this.studentData;
+    const ai = this.state.activeStudent;
+    const active = students[ai] || students[0];
+    const statusTint = (st) => st==='On track' ? '#E7ECDF;color:#5E6E4E' : st==='New' ? '#EBDFD2;color:#9A6A52' : '#F4E3DD;color:#B5634A';
+    const studentList = students.map((st, i) => ({
+      name: st.name, initials: st.initials, tint: st.tint, status: st.status,
+      progressLabel: st.total ? `${st.plan} · ${st.done}/${st.total}` : `${st.plan} · ${st.done} taken`,
+      go: () => this.setState({ activeStudent: i, skipped: false }),
+      cardStyle: `display:flex;align-items:center;gap:12px;width:100%;font-family:inherit;cursor:pointer;padding:14px 16px;border-radius:14px;border:1px solid ${i===ai?'#C2674F':'#EAE0D2'};background:${i===ai?'#EBDFD2':'#FBF7F1'};`,
+      statusStyle: `flex:none;font-size:11px;font-weight:700;padding:5px 10px;border-radius:100px;background:#${statusTint(st.status)};`,
+    }));
+
+    const e = this.earnings;
+    const maxBar = Math.max(...e.bars);
+    const earnBars = e.bars.map((v, i) => ({
+      h: `${Math.round(v/maxBar*100)}%`,
+      label: e.months[i],
+      bg: i === e.bars.length-1 ? '#C2674F' : '#D9C3AE',
+    }));
+
+    return {
+      teacherNav,
+      teacherLessons: tab==='lessons', teacherStudents: tab==='students', teacherEarnings: tab==='earnings', teacherMessages: tab==='messages',
+      goTeacherMessages: () => this.setState({ teacherTab: 'messages' }),
+      teacherLessonList: this.upcomingLessons.map(l => ({ ...l, initials: l.name.split(' ').map(w=>w[0]).join('') })),
+      studentList,
+      activeName: active.name, activeInitials: active.initials, activeTint: active.tint, activePlan: active.plan, activeFocus: active.focus, activeNext: active.next,
+      activeProgressLabel: active.total ? `${active.done} / ${active.total} lessons` : `${active.done} lessons taken`,
+      activeProgressPct: active.total ? `${Math.round(active.done/active.total*100)}%` : '100%',
+      skipLesson: () => this.setState(s => ({ skipped: !s.skipped })),
+      skipLabel: this.state.skipped ? 'Undo skip' : 'Skip today\u2019s lesson',
+      skipped: !!this.state.skipped,
+      earnMonth: e.month, earnDelta: e.delta, earnLessons: e.lessons, earnPending: e.pending,
+      earnBars, earnRows: e.rows,
+      threadList: students.slice(0,4).map((st,i) => ({
+        name: st.name, initials: st.initials, tint: st.tint,
+        preview: i===0 ? 'Perfect, see you then!' : i===1 ? 'Thank you for the HSK tips' : i===2 ? 'Can we move Thursday?' : 'Looking forward to lesson 4',
+        style: `display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F0E7DA;cursor:pointer;${i===0?'background:#EBDFD2;':''}`,
+      })),
+      teacherChat: this.chatVals([
+        { who: 'me', text: 'Great work today, James! For next time, try the three phrases I sent. 加油!', time: '4:12 PM' },
+        { who: 'rosie', text: 'Thank you Rosie! I used 不好意思 in a real shop today 😄', time: '5:48 PM' },
+        { who: 'me', text: 'That\u2019s exactly it. We\u2019ll polish your restaurant ordering on Monday.', time: '6:02 PM' },
+        { who: 'rosie', text: 'Perfect, see you then!', time: '6:05 PM' },
+      ]).map(m => ({ ...m })),
+    };
+  }
+
+  chatVals(msgs) {
+    return msgs.map(m => {
+      const me = m.who === 'me';
+      return {
+        text: m.text, time: m.time,
+        row: `display:flex;${me?'justify-content:flex-end;':'justify-content:flex-start;'}`,
+        bubble: `max-width:72%;padding:13px 17px;border-radius:16px;font-size:14.5px;line-height:1.5;${me?'background:#C2674F;color:#FBF4EE;border-bottom-right-radius:5px;':'background:#FFFFFF;color:#2E2823;border:1px solid #EAE0D2;border-bottom-left-radius:5px;'}`,
+        timeStyle: `font-size:11px;margin-top:5px;${me?'color:#F4D9CC;':'color:#A99B88;'}`,
+      };
+    });
+  }
+
+  checkoutVals() {
+    const course = this.courseData.find(c => c.id === this.state.schedCourse) || this.courseData[2];
+    const day = this.weekDays[this.state.dayIndex];
+    const isPkg = course.id === 'package';
+    const on = this.state.autoRenew;
+    return {
+      checkoutSlot: this.state.slot ? `${day.name}, June ${day.num} · ${this.state.slot}` : 'To be scheduled',
+      showAutoRenew: isPkg,
+      toggleRenew: () => this.setState(s => ({ autoRenew: !s.autoRenew })),
+      renewCardStyle: `width:100%;text-align:left;cursor:pointer;font-family:inherit;border-radius:18px;padding:22px 24px;background:${on?'#EBDFD2':'#FBF7F1'};border:1px solid ${on?'#D9B79F':'#EAE0D2'};`,
+      renewToggleStyle: `flex:none;width:42px;height:25px;border-radius:100px;background:${on?'#C2674F':'#D8CDBD'};display:flex;align-items:center;padding:3px;transition:background .2s;${on?'justify-content:flex-end;':'justify-content:flex-start;'}`,
+      renewKnobStyle: 'width:19px;height:19px;border-radius:50%;background:#FBF7F1;box-shadow:0 1px 3px rgba(0,0,0,0.2);',
+      renewNote: isPkg ? (on ? 'Auto-renews at $960 when your 16 lessons finish.' : 'One-time purchase — no auto-renewal.') : 'One-time purchase.',
+    };
+  }
+
+  schedVals() {
+    const di = this.state.dayIndex;
+    const days = this.weekDays;
+    const schedDays = days.map((d, i) => {
+      const sel = i === di;
+      const dis = d.count === 0;
+      return {
+        name: d.name, num: d.num, disabled: dis,
+        go: dis ? (() => {}) : (() => this.setState({ dayIndex: i, slot: null })),
+        countLabel: dis ? 'full' : `${d.count} open`,
+        style: `display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px;border-radius:12px;font-family:inherit;cursor:${dis?'not-allowed':'pointer'};`+
+          (sel ? 'background:#2E2823;color:#F4EEE5;border:1px solid #2E2823;'
+               : dis ? 'background:#F2EADE;color:#C2B7A4;border:1px solid #EDE3D5;'
+                     : 'background:#FFFFFF;color:#2E2823;border:1px solid #E7DCCD;'),
+        dotStyle: `font-size:10.5px;font-weight:600;margin-top:2px;${sel?'color:#E59B82;':dis?'color:#C2B7A4;':'color:#6E7F5E;'}`,
+      };
+    });
+    const slots = this.slotsForDay;
+    const schedSlots = slots.map(t => {
+      const sel = this.state.slot === t;
+      return {
+        label: t,
+        go: () => this.setState({ slot: t }),
+        style: `padding:13px 4px;border-radius:11px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;`+
+          (sel ? 'background:#C2674F;color:#FBF4EE;border:1px solid #C2674F;'
+               : 'background:#FFFFFF;color:#2E2823;border:1px solid #E7DCCD;'),
+      };
+    });
+    const course = this.courseData.find(c => c.id === this.state.schedCourse) || this.courseData[2];
+    const day = days[di];
+    const chosen = this.state.slot;
+    const continueOk = !!chosen;
+    return {
+      schedDays, schedSlots,
+      hasSlots: slots.length > 0, noSlots: slots.length === 0,
+      slotsHeading: `${day.name} June ${day.num} · available times`,
+      schedCourseName: course.name, schedCourseZh: course.zh, schedCoursePrice: course.price, schedCourseUnit: course.unit,
+      slotChosen: continueOk, slotNotChosen: !continueOk,
+      chosenLabel: continueOk ? `${day.name}, June ${day.num} · ${chosen}` : '',
+      continueDisabled: !continueOk,
+      continueLabel: continueOk ? 'Continue to payment →' : 'Pick a time to continue',
+      continueStyle: `width:100%;border:none;font-family:inherit;font-size:15px;font-weight:700;padding:15px;border-radius:100px;margin-top:20px;`+
+        (continueOk ? 'background:#C2674F;color:#FBF4EE;cursor:pointer;' : 'background:rgba(255,255,255,0.1);color:#8A7C6B;cursor:not-allowed;'),
+    };
+  }
+}
+</script>
+</body>
+</html>
