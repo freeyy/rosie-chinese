@@ -3,6 +3,8 @@
 A static, self-contained export of the `RosieChinese_v2` design from Claude Design,
 published with GitHub Pages so it can be previewed by anyone with the link.
 
+**Live:** https://freeyy.github.io/rosie-chinese/
+
 This is a **visual prototype**: every screen, animation and interaction from the
 design preview works (nav, booking flow, dashboards, tabs, FAQ), but nothing is
 wired to a backend — no accounts, no payments, no data is stored or sent.
