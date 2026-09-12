@@ -3,15 +3,22 @@
 
 The design file is a template plus component logic that the Claude Design
 runtime (src/support.js) renders in the browser. This script bundles the
-runtime, React and the webfont declarations straight into the page, so the
-published site needs exactly three network requests to become usable: the
-HTML itself and the two photographs. Nothing is fetched from a third party.
+runtime, React, the webfont declarations and the in-place copy editor
+(src/editor.js) straight into the page. Nothing is fetched from a third party.
 
-Usage: python3 build.py
+On top of the plain export it:
+  * tags every screen's <main> with data-screen="…" so the editor and the
+    tests can tell screens apart,
+  * drops the "warm temperature" developer tool,
+  * appends the copy editor.
+
+Usage: python3 build.py            # full build
+       python3 build.py --no-editor  # plain preview, no editor (used by tests)
 """
 
 import pathlib
 import re
+import sys
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src"
@@ -21,6 +28,18 @@ DESCRIPTION = (
     "Private 1:1 Mandarin lessons that get you actually speaking "
     "— not just memorizing characters."
 )
+
+SCREENS = [
+    ("HOME", "home"),
+    ("ABOUT", "about"),
+    ("COURSES", "courses"),
+    ("TESTIMONIALS", "stories"),
+    ("SCHEDULING", "schedule"),
+    ("CHECKOUT", "checkout"),
+    ("STUDENT DASHBOARD", "dashboard"),
+    ("TEACHER PORTAL", "teacher"),
+    ("CONTACT", "contact"),
+]
 
 
 def read(name):
@@ -34,15 +53,28 @@ def inline_script(name):
     return f"<script>\n{body}\n</script>"
 
 
-def drop(html, pattern, expected=1, label=""):
+def drop(html, pattern, expected=1, label="", flags=re.I):
     """Remove a pattern, asserting how many times it was supposed to match."""
-    out, found = re.subn(pattern, "", html, flags=re.I)
+    out, found = re.subn(pattern, "", html, flags=flags)
     if found != expected:
         raise SystemExit(f"expected {expected} match(es) for {label or pattern}, found {found}")
     return out
 
 
-def build():
+def tag_screens(html):
+    for label, key in SCREENS:
+        pat = r"(<!-- ===== " + re.escape(label) + r" ===== -->\s*<sc-if[^>]*>\s*<main)"
+        html, n = re.subn(pat, r'\1 data-screen="%s"' % key, html)
+        if n != 1:
+            raise SystemExit(f"expected 1 <main> for screen {label}, found {n}")
+    pat = r'(<!-- ===== LIGHTBOX ===== -->\s*<div onClick="\{\{ closePopup \}\}")'
+    html, n = re.subn(pat, r'\1 data-screen="popup"', html)
+    if n != 1:
+        raise SystemExit(f"expected 1 lightbox root, found {n}")
+    return html
+
+
+def build(with_editor=True):
     html = read("RosieChinese_v2.dc.html")
 
     # The runtime is inlined below, and the fonts are served from ./fonts.
@@ -52,6 +84,19 @@ def build():
     html = drop(html, r'\s*<link href="https://fonts\.googleapis\.com/css2[^"]*" rel="stylesheet">', label="google fonts")
     # <image-slot> is never used on this page, so its helper is dead weight.
     html = drop(html, r'\s*<script src="\./image-slot\.js"></script>', label="image-slot.js tag")
+    # The warm-temperature simulator is a design-time tool; the teacher never needs it.
+    html = drop(
+        html,
+        r"\s*<!-- ===== WARMTH SIMULATOR \(dev tool\) ===== -->.*?(?=\s*<!-- ===== LIGHTBOX ===== -->)",
+        label="warmth simulator block",
+        flags=re.S,
+    )
+    # Inline onmouseover/onmouseout strings make React throw (#231). The hover
+    # effects they carried are reproduced in CSS below.
+    html, n = re.subn(r'\s+onmouse(?:over|out)="[^"]*"', "", html)
+    if n != 12:
+        raise SystemExit(f"expected 12 inline mouse handlers, found {n}")
+    html = tag_screens(html)
 
     head = f"""<title>{TITLE}</title>
 <meta name="description" content="{DESCRIPTION}">
@@ -63,6 +108,15 @@ def build():
 <link rel="preload" as="image" href="./assets/rosie-soft.png">
 <!-- The raw template must never be painted, even if the runtime below fails. -->
 <style>x-dc{{display:none!important}}</style>
+<style>
+  /* hover effects for the social icons (moved out of inline handlers) */
+  main a[title="TikTok"], main a[title="小红书"], main a[title="YouTube"] {{ transition: transform 0.15s ease; }}
+  main a[title="TikTok"]:hover, main a[title="小红书"]:hover, main a[title="YouTube"]:hover {{ transform: translateY(-3px); }}
+  footer a[title="TikTok"]:hover {{ background: #111 !important; }}
+  footer a[title="YouTube"]:hover {{ background: #FF0000 !important; }}
+  footer a[title="YouTube"]:hover path {{ fill: #fff; }}
+  main span[style*="cursor: pointer"][style*="border-radius: 50%"][style*="width: 70px"]:hover {{ transform: scale(1.08); }}
+</style>
 <style>
 {read("fonts.css")}
 </style>
@@ -100,13 +154,15 @@ def build():
     if (!root || !root.firstElementChild) document.getElementById('rc-fallback').hidden = false;
   }, 8000);
 </script>
-</body>"""
-    html = html.replace("</body>", fallback, 1)
+"""
+    editor = inline_script("editor.js") + "\n" if with_editor else ""
+    html = html.replace("</body>", fallback + editor + "</body>", 1)
 
-    (ROOT / "index.html").write_text(html, encoding="utf-8")
-    kb = (ROOT / "index.html").stat().st_size / 1024
-    print(f"wrote index.html ({kb:.0f} KB)")
+    out = ROOT / "index.html"
+    out.write_text(html, encoding="utf-8")
+    kb = out.stat().st_size / 1024
+    print(f"wrote index.html ({kb:.0f} KB){'' if with_editor else ' [no editor]'}")
 
 
 if __name__ == "__main__":
-    build()
+    build(with_editor="--no-editor" not in sys.argv)
