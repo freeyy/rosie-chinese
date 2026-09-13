@@ -115,7 +115,7 @@ def open_faq(page, i):
     page.wait_for_timeout(650)
 
 
-def wait_ready(page):
-    page.goto(INDEX_URL)
+def wait_ready(page, url=INDEX_URL):
+    page.goto(url)
     page.wait_for_selector("#dc-root main[data-screen]", timeout=15000)
     page.wait_for_timeout(400)

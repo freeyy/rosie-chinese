@@ -311,11 +311,12 @@
 
   /* ---------- panel ---------- */
   const css = `
-  body.rc-ed-on .rc-edhover { outline: 2px dashed rgba(194,103,79,.75); outline-offset: 3px; border-radius: 4px; cursor: text; }
-  .rc-editing, .rc-editing .rc-edwrap { outline: 2px solid #C2674F !important; outline-offset: 3px; border-radius: 4px; caret-color: #C2674F; cursor: text; }
+  /* A terracotta ring with a white halo stays visible on cream, on the dark boxes and on terracotta buttons alike. */
+  body.rc-ed-on .rc-edhover:not(:has(> .rc-edwrap)) { outline: 2px dashed #C2674F; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255,255,255,.85); border-radius: 4px; cursor: text; }
+  .rc-editing:not(:has(> .rc-edwrap)), .rc-edwrap { outline: 2px solid #C2674F !important; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255,255,255,.9) !important; border-radius: 4px; cursor: text; caret-color: auto; }
   .rc-edwrap { display: inline; }
-  .rc-edwrap:focus, [contenteditable]:focus { outline: none; }
-  body.rc-ed-on .rc-edited { text-decoration: underline dotted rgba(194,103,79,.85); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+  .rc-edwrap:focus, [contenteditable]:focus { outline: 2px solid #C2674F; }
+  body.rc-ed-on .rc-edited { text-decoration: underline dotted currentColor; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
   body.rc-ed-on .rc-marquee-track { animation: none !important; }
   body.rc-ed-on .rc-marquee { overflow-x: auto !important; }
   body.rc-ed-on .rc-photo[style*="opacity:0;"], body.rc-ed-on .rc-photo[style*="opacity: 0;"] { pointer-events: none; }

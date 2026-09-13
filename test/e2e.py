@@ -56,6 +56,7 @@ TEST_CSS = "[data-reveal],.rc-lift,.rc-chap,.rc-photo{transition:none!important}
 
 
 def main():
+    url = sys.argv[1] if len(sys.argv) > 1 else INDEX_URL  # e.g. the live GitHub Pages URL
     results = []  # (id, ok, note)
     t0 = time.time()
     with sync_playwright() as p:
@@ -63,7 +64,7 @@ def main():
         page = browser.new_page(viewport={"width": 1400, "height": 900})
         errors = []
         page.on("pageerror", lambda e: errors.append(str(e)))
-        wait_ready(page)
+        wait_ready(page, url)
         page.add_style_tag(content=TEST_CSS)
         page.evaluate("rcEditor.clearAll(); rcEditor.setOpen(false)")
 
@@ -190,6 +191,8 @@ def main():
     lines = [
         "# 端到端测试报告",
         "",
+        f"页面：{url}",
+        "",
         f"时间：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} · 耗时 {time.time() - t0:.0f} 秒 · 字段 {len(results)} 条：通过 {passed}，失败 {len(failed)}",
         "",
         "## 整体检查",
@@ -202,7 +205,8 @@ def main():
         lines += ["", "JavaScript 报错：", ""] + [f"- {e[:200]}" for e in errors[:10]]
     lines += ["", "## 逐条结果", "", "| 编号 | 结果 | 说明 |", "|---|---|---|"]
     lines += [f"| {i} | {'通过' if ok else '失败'} | {n} |" for i, ok, n in results]
-    (ROOT / "test" / "e2e-report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    report = ROOT / "test" / ("e2e-report.md" if url == INDEX_URL else "e2e-report-live.md")
+    report.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"{passed}/{len(results)} fields passed; extra checks: {[(n, ok) for n, ok in extra]}")
     for i, n in failed:
         print(f"  FAIL {i}: {n}")

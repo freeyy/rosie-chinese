@@ -17,9 +17,10 @@ import sys
 from PIL import Image, ImageChops
 from playwright.sync_api import sync_playwright
 
-from fields_lib import ROOT, SCREENS, goto_screen
+from fields_lib import ROOT, SCREENS
 
-FREEZE = "*{animation:none!important;transition:none!important} #rc-edpanel,.rc-edtoast,[title='Warm temperature simulator']{display:none!important}"
+# The prototype nav bar is hidden too: its backdrop blur re-samples the page differently between runs.
+FREEZE = "*{animation:none!important;transition:none!important} #rc-edpanel,.rc-edtoast,.rc-proto,[title='Warm temperature simulator']{display:none!important}"
 OUT = ROOT / "test" / "visual"
 
 
@@ -31,8 +32,9 @@ def shoot(page, url, tag):
     page.evaluate("() => { try { localStorage.removeItem('rc-warmth'); localStorage.removeItem('rc-warmtint'); localStorage.removeItem('rc-copy-edits-v1'); } catch (e) {} }")
     paths = {}
     for screen, label, _ in SCREENS + [("schedule", "Booking", ""), ("dashboard", "Student", ""), ("teacher", "Teacher portal", "")]:
-        goto_screen(page, label)
-        page.wait_for_timeout(300)
+        # the nav bar is hidden by FREEZE, so switch screens by dispatching the click in page
+        page.evaluate("(l) => [...document.querySelectorAll('.rc-proto button')].find(b => b.textContent.trim() === l).click()", label)
+        page.wait_for_timeout(500)
         p = OUT / f"{tag}-{screen}.png"
         page.screenshot(path=str(p), full_page=True)
         paths[screen] = p
