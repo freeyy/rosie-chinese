@@ -38,7 +38,7 @@
 
   /* ---------- state ---------- */
   const STORAGE = 'rc-copy-edits-v1';
-  const state = { on: false, edits: {}, editing: null, open: true, confirmClear: false };
+  const state = { on: false, edits: {}, editing: null, open: false, confirmClear: false };
   let applying = false;
 
   function load() {
@@ -141,6 +141,8 @@
 
   function startEdit(unit, x, y) {
     if (state.editing) commit(false);
+    // fold the panel so it never sits on top of the text being edited
+    if (state.open) { state.open = false; renderPanel(); }
     state.editing = unit;
     if (isField(unit)) {
       unit._edBefore = norm(unit.placeholder);

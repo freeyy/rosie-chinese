@@ -2,7 +2,7 @@
 
 页面：file:///Volumes/External/workplace/chinese-course/rosie-chinese/index.html
 
-时间：2026-09-12 17:00 · 耗时 163 秒 · 字段 323 条：通过 323，失败 0
+时间：2026-09-12 17:11 · 耗时 164 秒 · 字段 323 条：通过 323，失败 0
 
 ## 整体检查
 
